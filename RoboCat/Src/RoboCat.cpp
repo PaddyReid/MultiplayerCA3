@@ -1,8 +1,8 @@
 #include <RoboCatPCH.h>
 
 //zoom hardcoded at 100...if we want to lock players on screen, this could be calculated from zoom
-const float HALF_WORLD_HEIGHT = 3.6f;
-const float HALF_WORLD_WIDTH = 6.4f;
+const float HALF_WORLD_HEIGHT = 9*3.6f;
+const float HALF_WORLD_WIDTH = 9*6.4f;
 
 RoboCat::RoboCat() :
 	GameObject(),
