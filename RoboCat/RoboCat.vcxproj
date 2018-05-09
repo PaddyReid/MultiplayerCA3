@@ -371,6 +371,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Yarn.cpp" />
     <ClInclude Include="Inc\AckRange.h" />
     <ClInclude Include="Inc\Yarn.h" />
     <ClInclude Include="Inc\ByteSwap.h" />
@@ -404,7 +405,6 @@
     <ClInclude Include="Inc\WeightedTimedMovingAverage.h" />
     <ClInclude Include="Inc\World.h" />
     <ClCompile Include="Src\AckRange.cpp" />
-    <ClCompile Include="Src\Yarn.cpp" />
     <ClCompile Include="Src\DeliveryNotificationManager.cpp" />
     <ClCompile Include="Src\Engine.cpp" />
     <ClCompile Include="Src\GameObjectRegistry.cpp" />

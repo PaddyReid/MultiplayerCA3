@@ -10,9 +10,11 @@ public:
 	void					Clear();
 	void					Present();
 	SDL_Rect&				GetLogicalViewport();
+	SDL_Rect&				GetPlayerViewport();
 	SDL_Renderer*			GetRenderer();
 
 	~GraphicsDriver();
+	//void SetViewport(Vector3 playerLocation);
 
 private:
 

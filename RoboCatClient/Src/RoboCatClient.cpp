@@ -43,6 +43,8 @@ void RoboCatClient::Update()
 			
 			//LOG( "Client Move Time: %3.4f deltaTime: %3.4f left rot at %3.4f", latestMove.GetTimestamp(), deltaTime, GetRotation() );
 		}
+		//Set camera viewport to follow player
+		RenderManager::sInstance->SetCamera(GetLocation());
 	}
 	else
 	{

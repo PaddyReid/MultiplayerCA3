@@ -34,7 +34,8 @@ bool GraphicsDriver::Init( SDL_Window* inWnd )
 	}
 
 	// Cornflower blue background, cause why not?
-	SDL_SetRenderDrawColor( mRenderer, 100, 149, 237, SDL_ALPHA_OPAQUE );
+	SDL_SetRenderDrawColor(mRenderer, 100, 149, 237, SDL_ALPHA_OPAQUE);
+	//SDL_SetRenderTarget(mRenderer, );
 	// Set the logical size to 1280x720 so everything will just auto-scale
 	SDL_RenderSetLogicalSize( mRenderer, 1280, 720 );
 	return true;
@@ -66,8 +67,13 @@ void GraphicsDriver::Present()
 
 SDL_Rect& GraphicsDriver::GetLogicalViewport()
 {
-	SDL_RenderGetLogicalSize( mRenderer, &mViewport.w, &mViewport.h );
+	SDL_RenderGetLogicalSize(mRenderer, &mViewport.w, &mViewport.h);
 
+	return mViewport;
+}
+
+SDL_Rect& GraphicsDriver::GetPlayerViewport()
+{
 	return mViewport;
 }
 
@@ -75,3 +81,10 @@ SDL_Renderer* GraphicsDriver::GetRenderer()
 {
 	return mRenderer;
 }
+//
+//void GraphicsDriver::SetViewport(Vector3 playerLocation)
+//{
+//	mViewport.x = (playerLocation.mX*100) + mViewport.w*0.5;
+//	mViewport.y = (playerLocation.mY*100) + mViewport.h*0.5;
+//
+//}

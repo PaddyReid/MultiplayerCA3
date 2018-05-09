@@ -28,6 +28,7 @@ void HUD::StaticInit()
 void HUD::Render()
 {
 	//RenderBandWidth();
+	RenderPosition();
 	RenderRoundTripTime();
 	RenderScoreBoard();
 	RenderHealth();
@@ -45,9 +46,20 @@ void HUD::RenderHealth()
 void HUD::RenderBandWidth()
 {
 	string bandwidth = StringUtils::Sprintf( "In %d  Bps, Out %d Bps",
-												static_cast< int >( NetworkManagerClient::sInstance->GetBytesReceivedPerSecond().GetValue() ),
-												static_cast< int >( NetworkManagerClient::sInstance->GetBytesSentPerSecond().GetValue() ) );
+		static_cast< int >(NetworkManagerClient::sInstance->GetBytesReceivedPerSecond().GetValue()),
+		static_cast< int >(NetworkManagerClient::sInstance->GetBytesSentPerSecond().GetValue()));
 	RenderText( bandwidth, mBandwidthOrigin, Colors::White );
+}
+
+void HUD::RenderPosition()
+{
+	string position = StringUtils::Sprintf("ViewTransPos: [%d,%d], ViewTransWidth: [%d, %d]",
+		static_cast< int >(RenderManager::sInstance->GetViewTransform().x),
+		static_cast< int >(RenderManager::sInstance->GetViewTransform().y),
+		static_cast< int >(RenderManager::sInstance->GetViewTransform().w),
+		static_cast< int >(RenderManager::sInstance->GetViewTransform().h));
+
+	RenderText(position, mBandwidthOrigin, Colors::White);
 }
 
 void HUD::RenderRoundTripTime()

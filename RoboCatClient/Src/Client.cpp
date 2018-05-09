@@ -55,7 +55,7 @@ void Client::DoFrame()
 	Engine::DoFrame();
 
 	NetworkManagerClient::sInstance->ProcessIncomingPackets();
-
+	
 	RenderManager::sInstance->Render();
 
 	NetworkManagerClient::sInstance->SendOutgoingPackets();

@@ -8,13 +8,15 @@ public:
 	static std::unique_ptr< RenderManager >	sInstance;
 
 	void Render();
+	void SetCamera(Vector3 playerLocation);
+	SDL_Rect GetViewTransform() const;
 	void RenderComponents();
 
 	//vert inefficient method of tracking scene graph...
 	void AddComponent( SpriteComponent* inComponent );
 	void RemoveComponent( SpriteComponent* inComponent );
 	int	 GetComponentIndex( SpriteComponent* inComponent ) const;
-
+	
 private:
 
 	RenderManager();
