@@ -8,12 +8,18 @@ void TextureManager::StaticInit()
 	sInstance.reset( new TextureManager() );
 }
 
+
 TextureManager::TextureManager()
 {
-	CacheTexture( "cat", "../Assets/cat.png" );
+	CacheTexture( "cat1", "../Assets/hitman_Idle.png");
+	CacheTexture( "cat", "../Assets/hitman_Moving.png");
 	CacheTexture( "mouse", "../Assets/mouse.png" );
+<<<<<<< Updated upstream
 	CacheTexture("yarn", "../Assets/yarn.png");
 	
+=======
+	CacheTexture( "yarn", "../Assets/Bullet.png" );
+>>>>>>> Stashed changes
 }
 
 TexturePtr	TextureManager::GetTexture( const string& inTextureName )

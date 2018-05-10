@@ -57,11 +57,11 @@ void InputManager::HandleInput( EInputAction inInputAction, int inKeyCode )
 		UpdateDesireFloatFromKey( inInputAction, mCurrentState.mDesiredBackAmount );
 		break;
 	case 'k':
-		UpdateDesireVariableFromKey( inInputAction, mCurrentState.mIsShooting );
+		UpdateDesireVariableFromKey(inInputAction, mCurrentState.mIsShooting);
 		break;
 	}
-
 }
+
 
 
 InputManager::InputManager() :

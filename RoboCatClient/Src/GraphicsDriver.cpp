@@ -33,6 +33,9 @@ bool GraphicsDriver::Init( SDL_Window* inWnd )
 		return false;
 	}
 
+
+	//Render Pixel world here
+
 	// Cornflower blue background, cause why not?
 	SDL_SetRenderDrawColor(mRenderer, 100, 149, 237, SDL_ALPHA_OPAQUE);
 	//SDL_SetRenderTarget(mRenderer, );
