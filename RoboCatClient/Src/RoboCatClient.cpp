@@ -7,7 +7,7 @@ RoboCatClient::RoboCatClient() :
 	mTimeVelocityBecameOutOfSync( 0.f )
 {
 	mSpriteComponent.reset( new SpriteComponent( this ) );
-	mSpriteComponent->SetTexture( TextureManager::sInstance->GetTexture( "cat" ) );
+	mSpriteComponent->SetTexture(TextureManager::sInstance->GetTexture("cat"));
 }
 
 void RoboCatClient::HandleDying()
@@ -155,8 +155,6 @@ void RoboCatClient::Read( InputMemoryBitStream& inInputStream )
 		}
 
 	}
-
-	
 }
 
 
@@ -181,9 +179,6 @@ void RoboCatClient::DoClientSidePredictionAfterReplicationForLocalCat( uint32_t 
 			SimulateMovement( deltaTime );
 		}
 	}
-
-	
-
 }
 
 

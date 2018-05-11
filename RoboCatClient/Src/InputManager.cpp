@@ -72,8 +72,8 @@ void InputManager::HandleInput( EInputAction inInputAction, int inKeyCode )
 		UpdateDesireVariableFromKeyPress(inInputAction, mCurrentState.mIsReady);
 		break;
 	}
-
 }
+
 
 
 InputManager::InputManager() :
