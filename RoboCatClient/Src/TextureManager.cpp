@@ -11,16 +11,13 @@ void TextureManager::StaticInit()
 
 TextureManager::TextureManager()
 {
-	CacheTexture( "cat1", "../Assets/hitman_Idle.png");
 	CacheTexture( "cat", "../Assets/hitman_Moving.png");
+	CacheTexture("grass", "../Assets/Tiles/wall.png");
 	CacheTexture( "mouse", "../Assets/mouse.png" );
-<<<<<<< Updated upstream
-	CacheTexture("yarn", "../Assets/yarn.png");
-	
-=======
+
 	CacheTexture( "yarn", "../Assets/Bullet.png" );
->>>>>>> Stashed changes
 }
+
 
 TexturePtr	TextureManager::GetTexture( const string& inTextureName )
 {

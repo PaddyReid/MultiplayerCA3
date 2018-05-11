@@ -15,9 +15,11 @@ bool Server::StaticInit()
 Server::Server()
 {
 
-	GameObjectRegistry::sInstance->RegisterCreationFunction( 'RCAT', RoboCatServer::StaticCreate );
+	
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'MOUS', MouseServer::StaticCreate );
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'YARN', YarnServer::StaticCreate );
+	GameObjectRegistry::sInstance->RegisterCreationFunction( 'GRAS', MapServer::StaticCreate);
+	GameObjectRegistry::sInstance->RegisterCreationFunction('RCAT', RoboCatServer::StaticCreate);
 
 	InitNetworkManager();
 	
@@ -62,9 +64,18 @@ namespace
 			go->SetLocation( mouseLocation );
 		}
 	}
-
-
 }
+
+
+void Server::DrawTileMap()
+	{
+		GameObjectPtr tile;
+		tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+		Vector3 tilelocation = Vector3(0.f, -2.f, 0.f);
+		tile->SetLocation(tilelocation);
+	}
+
+
 
 
 void Server::SetupWorld()
@@ -74,6 +85,10 @@ void Server::SetupWorld()
 	
 	//spawn more random mice!
 	CreateRandomMice( 10 );
+
+	//Draw tile map
+	//Change to power ups??
+	//DrawTileMap();
 }
 
 void Server::DoFrame()
@@ -104,8 +119,13 @@ void Server::SpawnCatForPlayer( int inPlayerId )
 	RoboCatPtr cat = std::static_pointer_cast< RoboCat >( GameObjectRegistry::sInstance->CreateGameObject( 'RCAT' ) );
 	cat->SetColor( ScoreBoardManager::sInstance->GetEntry( inPlayerId )->GetColor() );
 	cat->SetPlayerId( inPlayerId );
+	
 	//gotta pick a better spawn location than this...
+
+	//TO-DO set spawn locations
+
 	cat->SetLocation( Vector3( 1.f - static_cast< float >( inPlayerId ), 0.f, 0.f ) );
+
 
 }
 

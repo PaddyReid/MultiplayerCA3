@@ -1,6 +1,8 @@
-#include <RoboCatClientPCH.h>
+#include "RoboCatClientPCH.h"
 
 std::unique_ptr< RenderManager >	RenderManager::sInstance;
+
+SDL_Renderer* RenderManager::renderer = nullptr;
 
 RenderManager::RenderManager()
 {
@@ -60,12 +62,12 @@ void RenderManager::RenderComponents()
 {
 	//Get the logical viewport so we can pass this to the SpriteComponents when it's draw time
 	SDL_Rect viewport = GraphicsDriver::sInstance->GetLogicalViewport();
-
 	for( auto cIt = mComponents.begin(), end = mComponents.end(); cIt != end; ++cIt )
 	{
 		( *cIt )->Draw(mViewTransform);
 	}
 }
+
 
 void RenderManager::Render()
 {
@@ -73,6 +75,7 @@ void RenderManager::Render()
     // Clear the back buffer
     //
 	GraphicsDriver::sInstance->Clear();
+
 	
 	RenderManager::sInstance->RenderComponents();
 	HUD::sInstance->Render();

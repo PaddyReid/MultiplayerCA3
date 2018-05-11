@@ -7,11 +7,11 @@ Mouse::Mouse()
 }
 
 
-bool Mouse::HandleCollisionWithCat( RoboCat* inCat )
-{
-	( void ) inCat;
-	return false;
-}
+//bool Mouse::HandleCollisionWithCat( RoboCat* inCat )
+//{
+//( void ) inCat;
+//	return false;
+//}
 
 
 

@@ -77,6 +77,7 @@ class GameObject;
 #include "World.h"
 #include "Timing.h"
 #include "Mouse.h"
+#include "Map.h"
 #include "Yarn.h"
 #include "StringUtils.h"
 #include "ScoreBoardManager.h"

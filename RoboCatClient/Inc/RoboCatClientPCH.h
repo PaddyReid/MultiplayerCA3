@@ -13,12 +13,14 @@
 
 #include <RoboCatClient.h>
 #include <MouseClient.h>
+#include <MapClient.h>
 #include <YarnClient.h>
 
 #include <HUD.h>
 
-
 #include <ReplicationManagerClient.h>
 #include <NetworkManagerClient.h>
 #include <Client.h>
+
+
 

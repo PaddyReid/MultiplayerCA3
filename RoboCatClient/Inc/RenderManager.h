@@ -1,5 +1,4 @@
 //I take care of rendering things!
-
 class RenderManager
 {
 public:
@@ -16,6 +15,7 @@ public:
 	void AddComponent( SpriteComponent* inComponent );
 	void RemoveComponent( SpriteComponent* inComponent );
 	int	 GetComponentIndex( SpriteComponent* inComponent ) const;
+	static SDL_Renderer *renderer;
 	
 private:
 

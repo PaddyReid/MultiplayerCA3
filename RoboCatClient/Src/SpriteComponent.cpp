@@ -3,6 +3,7 @@
 SpriteComponent::SpriteComponent( GameObject *inGameObject ) :
 	mGameObject( inGameObject )
 {
+
 	//hardcoded at the moment...
 	float textureWidth = 128.f, textureHeight = 128.f;
 	//origin should be half texture size, but we're not loading the actual size at the moment
