@@ -177,7 +177,7 @@ void RoboCatClient::DoClientSidePredictionAfterReplicationForLocalCat( uint32_t 
 		{
 			float deltaTime = move.GetDeltaTime();
 			ProcessInput( deltaTime, move.GetInputState() );
-
+			
 			SimulateMovement( deltaTime );
 		}
 	}

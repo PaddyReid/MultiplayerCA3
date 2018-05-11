@@ -109,7 +109,8 @@ void NetworkManagerClient::HandleStatePacket( InputMemoryBitStream& inInputStrea
 
 		//old
 		//HandleGameObjectState( inPacketBuffer );
-		HandleScoreBoardState( inInputStream );
+		HandleScoreBoardState(inInputStream);
+		HandleLobbyState(inInputStream);
 
 		//tell the replication manager to handle the rest...
 		mReplicationManagerClient.Read( inInputStream );
@@ -174,9 +175,14 @@ void NetworkManagerClient::HandleGameObjectState( InputMemoryBitStream& inInputS
 	DestroyGameObjectsInMap( objectsToDestroy );
 }
 
-void NetworkManagerClient::HandleScoreBoardState( InputMemoryBitStream& inInputStream )
+void NetworkManagerClient::HandleScoreBoardState(InputMemoryBitStream& inInputStream)
 {
-	ScoreBoardManager::sInstance->Read( inInputStream );
+	ScoreBoardManager::sInstance->Read(inInputStream);
+}
+
+void NetworkManagerClient::HandleLobbyState(InputMemoryBitStream& inInputStream)
+{
+	LobbyManager::sInstance->Read(inInputStream);
 }
  
 void NetworkManagerClient::DestroyGameObjectsInMap( const IntToGameObjectMap& inObjectsToDestroy )

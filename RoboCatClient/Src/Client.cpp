@@ -66,11 +66,17 @@ void Client::HandleEvent( SDL_Event* inEvent )
 	switch( inEvent->type )
 	{
 	case SDL_KEYDOWN:
-		InputManager::sInstance->HandleInput( EIA_Pressed, inEvent->key.keysym.sym );
+			InputManager::sInstance->HandleInput(EIA_Pressed, inEvent->key.keysym.sym);
 		break;
 	case SDL_KEYUP:
-		InputManager::sInstance->HandleInput( EIA_Released, inEvent->key.keysym.sym );
+			InputManager::sInstance->HandleInput(EIA_Released, inEvent->key.keysym.sym);
 		break;
+	//case SDL_MOUSEBUTTONDOWN:
+	//	InputManager::sInstance->HandleInput(EIA_Pressed, inEvent->key.keysym.sym);
+	//	break;
+	//case SDL_MOUSEBUTTONUP:
+	//	InputManager::sInstance->HandleInput(EIA_Released, inEvent->key.keysym.sym);
+	//	break;
 	default:
 		break;
 	}

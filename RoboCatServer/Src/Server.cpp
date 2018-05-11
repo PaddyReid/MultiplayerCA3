@@ -1,9 +1,4 @@
-
 #include <RoboCatServerPCH.h>
-
-
-
-//uncomment this when you begin working on the server
 
 bool Server::StaticInit()
 {
@@ -94,8 +89,9 @@ void Server::HandleNewClient( ClientProxyPtr inClientProxy )
 {
 	
 	int playerId = inClientProxy->GetPlayerId();
-	
-	ScoreBoardManager::sInstance->AddEntry( playerId, inClientProxy->GetName() );
+
+	ScoreBoardManager::sInstance->AddEntry(playerId, inClientProxy->GetName());
+	LobbyManager::sInstance->AddEntry(playerId, inClientProxy->GetName());
 	SpawnCatForPlayer( playerId );
 }
 
@@ -115,7 +111,8 @@ void Server::HandleLostClient( ClientProxyPtr inClientProxy )
 	//remove client from scoreboard
 	int playerId = inClientProxy->GetPlayerId();
 
-	ScoreBoardManager::sInstance->RemoveEntry( playerId );
+	ScoreBoardManager::sInstance->RemoveEntry(playerId);
+	LobbyManager::sInstance->RemoveEntry(playerId);
 	RoboCatPtr cat = GetCatForPlayer( playerId );
 	if( cat )
 	{

@@ -26,6 +26,5 @@ private:
 
 	SDL_Rect						mViewTransform;
 
-
 };
 

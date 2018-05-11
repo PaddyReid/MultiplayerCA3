@@ -14,6 +14,7 @@ public:
 	float GetDesiredHorizontalDelta()	const { return mDesiredRightAmount - mDesiredLeftAmount; }
 	float GetDesiredVerticalDelta()		const { return mDesiredForwardAmount - mDesiredBackAmount; }
 	bool  IsShooting()					const { return mIsShooting; }
+	bool  IsReady()					const { return mIsReady; }
 
 	bool Write( OutputMemoryBitStream& inOutputStream ) const;
 	bool Read( InputMemoryBitStream& inInputStream );
@@ -23,5 +24,5 @@ private:
 
 	float	mDesiredRightAmount, mDesiredLeftAmount;
 	float	mDesiredForwardAmount, mDesiredBackAmount;
-	bool	mIsShooting;
+	bool	mIsShooting, mIsReady;
 };

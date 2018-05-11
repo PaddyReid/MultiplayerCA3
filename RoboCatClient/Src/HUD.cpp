@@ -9,7 +9,8 @@ mBandwidthOrigin( 50.f, 10.f, 0.0f ),
 mRoundTripTimeOrigin( 50.f, 10.f, 0.0f ),
 mScoreOffset( 0.f, 50.f, 0.0f ),
 mHealthOffset( 1000, 10.f, 0.0f ),
-mHealth( 0 )
+mHealth( 0 ),
+mInLobby(true)
 {
 	TTF_Init();
 	mFont = TTF_OpenFont( "../Assets/Carlito-Regular.TTF", 36 );
@@ -27,19 +28,42 @@ void HUD::StaticInit()
 
 void HUD::Render()
 {
-	//RenderBandWidth();
 	RenderPosition();
-	RenderRoundTripTime();
-	RenderScoreBoard();
-	RenderHealth();
+	//RenderRoundTripTime();
+
+	if (InLobby()) {
+		RenderLobby();
+	}
+	else {
+		RenderScoreBoard();
+		RenderHealth();
+	}
+}
+
+void HUD::RenderLobby()
+{
+	const vector< LobbyManager::LobbyPlayer >& entries = LobbyManager::sInstance->GetEntries();
+	Vector3 offset = mScoreBoardOrigin;
+
+	for (const auto& entry : entries)
+	{
+		//entry.GetFormattedNameReadyState()
+		RenderText(entry.GetFormattedNameReadyState(), offset, entry.GetColor());
+		offset.mX += mScoreOffset.mX;
+		offset.mY += mScoreOffset.mY;
+		if(entry.GetPlayerId() == NetworkManagerClient::sInstance->GetPlayerId())
+			RenderText(entry.GetLobbyMessage(), mBandwidthOrigin, Colors::White);
+
+	}
+
 }
 
 void HUD::RenderHealth()
 {
-	if( mHealth > 0 )
+	if (mHealth > 0)
 	{
-		string healthString = StringUtils::Sprintf( "Health %d", mHealth );
-		RenderText( healthString, mHealthOffset, Colors::Red );
+		string healthString = StringUtils::Sprintf("Health %d", mHealth);
+		RenderText(healthString, mHealthOffset, Colors::Red);
 	}
 }
 
@@ -53,13 +77,11 @@ void HUD::RenderBandWidth()
 
 void HUD::RenderPosition()
 {
-	string position = StringUtils::Sprintf("ViewTransPos: [%d,%d], ViewTransWidth: [%d, %d]",
+	string position = StringUtils::Sprintf("ViewTransPos: [%d,%d]",
 		static_cast< int >(RenderManager::sInstance->GetViewTransform().x),
-		static_cast< int >(RenderManager::sInstance->GetViewTransform().y),
-		static_cast< int >(RenderManager::sInstance->GetViewTransform().w),
-		static_cast< int >(RenderManager::sInstance->GetViewTransform().h));
+		static_cast< int >(RenderManager::sInstance->GetViewTransform().y));
 
-	RenderText(position, mBandwidthOrigin, Colors::White);
+	RenderText(position, mHealthOffset, Colors::White);
 }
 
 void HUD::RenderRoundTripTime()

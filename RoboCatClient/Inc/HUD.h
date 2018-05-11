@@ -11,7 +11,10 @@ public:
 
 	void Render();
 
-	void			SetPlayerHealth( int inHealth )	{ mHealth = inHealth; }
+	void RenderLobby();
+
+	void			SetPlayerHealth(int inHealth) { mHealth = inHealth; }
+	bool			InLobby() const { return mInLobby; }
 
 private:
 
@@ -33,5 +36,6 @@ private:
 
 	TTF_Font*									mFont;
 	int											mHealth;
+	bool										mInLobby;
 };
 
