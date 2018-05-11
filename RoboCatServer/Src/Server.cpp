@@ -63,12 +63,13 @@ namespace
 
 
 void Server::DrawTileMap()
-	{
-		GameObjectPtr tile;
-		tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
-		Vector3 tilelocation = Vector3(0.f, -2.f, 0.f);
-		tile->SetLocation(tilelocation);
-	}
+{
+	GameObjectPtr tile;
+	tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	Vector3 tilelocation = Vector3(0.f, 0.f, 0.f);
+	tile->SetLocation(tilelocation);
+	
+}
 
 
 

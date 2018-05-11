@@ -1,22 +1,5 @@
-﻿  RoboCatClientPCH.cpp
-  WindowManager.cpp
-  MouseClient.cpp
-  TextureManager.cpp
-  Texture.cpp
-  SpriteComponent.cpp
-  RoboCatClient.cpp
-  ReplicationManagerClient.cpp
-  RenderManager.cpp
-h:\college_year4\multiplayer_ca3\multiplayerca3\robocatclient\src\rendermanager.cpp(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-h:\college_year4\multiplayer_ca3\multiplayerca3\robocatclient\src\rendermanager.cpp(93): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-  NetworkManagerClient.cpp
-  InputManager.cpp
-  HUD.cpp
-  GraphicsDriver.cpp
-  ClientMain.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(937,5): warning MSB8027: Two or more files with the name of MapClient.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are Inc\MapClient.cpp, Src\MapClient.cpp.
   Client.cpp
-  YarnClient.cpp
-  Generating Code...
   RoboCatClient.vcxproj -> H:\College_Year4\Multiplayer_CA3\MultiplayerCA3\Debug\RoboCatClient.exe
   H:\College_Year4\Multiplayer_CA3\MultiplayerCA3\RoboCatClient\\..\SDL\lib\win\x86\libfreetype-6.dll
   H:\College_Year4\Multiplayer_CA3\MultiplayerCA3\RoboCatClient\\..\SDL\lib\win\x86\libogg-0.dll

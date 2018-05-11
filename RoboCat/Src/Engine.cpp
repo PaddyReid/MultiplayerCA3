@@ -44,6 +44,10 @@ void Engine::HandleEvent( SDL_Event* inEvent )
 	( void )inEvent;
 }
 
+void Engine::DrawTileMap()
+{
+}
+
 int Engine::DoRunLoop()
 {
 	// Main message loop

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\MapServer.cpp" />
     <ClCompile Include="Src\YarnServer.cpp" />
     <ClCompile Include="Src\ClientProxy.cpp" />
     <ClCompile Include="Src\ReplicationManagerServer.cpp" />
@@ -26,6 +27,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Inc\MapServer.h" />
     <ClInclude Include="Inc\YarnServer.h" />
     <ClInclude Include="Inc\ClientProxy.h" />
     <ClInclude Include="Inc\ReplicationManagerServer.h" />

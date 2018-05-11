@@ -1,15 +1,4 @@
-﻿  RoboCatServerPCH.cpp
-  MouseServer.cpp
-  RoboCatServer.cpp
-  NetworkManagerServer.cpp
-  ServerMain.cpp
-  Server.cpp
-  ReplicationManagerTransmissionData.cpp
-  ReplicationManagerServer.cpp
-  ClientProxy.cpp
-  YarnServer.cpp
-  Generating Code...
-  RoboCatServer.vcxproj -> H:\College_Year4\Multiplayer_CA3\MultiplayerCA3\Debug\RoboCatServer.exe
+﻿  RoboCatServer.vcxproj -> H:\College_Year4\Multiplayer_CA3\MultiplayerCA3\Debug\RoboCatServer.exe
   H:\College_Year4\Multiplayer_CA3\MultiplayerCA3\RoboCatServer\\..\SDL\lib\win\x86\libfreetype-6.dll
   H:\College_Year4\Multiplayer_CA3\MultiplayerCA3\RoboCatServer\\..\SDL\lib\win\x86\libogg-0.dll
   H:\College_Year4\Multiplayer_CA3\MultiplayerCA3\RoboCatServer\\..\SDL\lib\win\x86\libpng16-16.dll

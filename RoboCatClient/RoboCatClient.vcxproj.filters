@@ -60,6 +60,10 @@
     <ClCompile Include="Src\YarnClient.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Src\MapClient.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Inc\MapClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\RoboCatClientPCH.h">
@@ -105,6 +109,9 @@
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\YarnClient.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\MapClient.h">
       <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>

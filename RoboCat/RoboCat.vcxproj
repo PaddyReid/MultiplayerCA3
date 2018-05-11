@@ -372,9 +372,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Src\LobbyManager.cpp" />
+    <ClCompile Include="Src\Map.cpp" />
     <ClCompile Include="Src\Yarn.cpp" />
     <ClInclude Include="Inc\AckRange.h" />
     <ClInclude Include="Inc\LobbyManager.h" />
+    <ClInclude Include="Inc\Map.h" />
     <ClInclude Include="Inc\Yarn.h" />
     <ClInclude Include="Inc\ByteSwap.h" />
     <ClInclude Include="Inc\DeliveryNotificationManager.h" />

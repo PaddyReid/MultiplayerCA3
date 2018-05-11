@@ -42,6 +42,9 @@
     <ClCompile Include="Src\YarnServer.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Src\MapServer.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\RoboCatServerPCH.h">
@@ -69,6 +72,9 @@
       <Filter>Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\YarnServer.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\MapServer.h">
       <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>

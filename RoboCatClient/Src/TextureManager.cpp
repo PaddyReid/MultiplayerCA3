@@ -11,11 +11,12 @@ void TextureManager::StaticInit()
 
 TextureManager::TextureManager()
 {
-	CacheTexture( "cat", "../Assets/hitman_Moving.png");
-	CacheTexture("grass", "../Assets/Tiles/wall.png");
-	CacheTexture( "mouse", "../Assets/mouse.png" );
-
-	CacheTexture( "yarn", "../Assets/Bullet.png" );
+	CacheTexture(	"cat", "../Assets/hitman_Moving.png");
+	CacheTexture(	"grass", "../Assets/Tiles/grass.png");
+	CacheTexture(	"wall", "../Assets/Tiles/wall.png");
+	CacheTexture(	"window", "../Assets/Tiles/window.png");
+	CacheTexture(	"mouse", "../Assets/mouse.png" );
+	CacheTexture(	"yarn", "../Assets/Bullet.png" );
 }
 
 

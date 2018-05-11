@@ -112,6 +112,9 @@
     <ClInclude Include="Inc\LobbyManager.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\Map.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\GameObject.cpp">
@@ -190,6 +193,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\LobbyManager.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Map.cpp">
       <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>

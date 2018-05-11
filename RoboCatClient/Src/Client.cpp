@@ -27,7 +27,8 @@ bool Client::StaticInit( )
 	return true;
 }
 
-Client::Client()
+Client::Client() :
+	isStarted(false)
 {
 	
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'MOUS', MouseClient::StaticCreate );
@@ -48,10 +49,76 @@ Client::Client()
 	//NetworkManagerClient::sInstance->SetSimulatedLatency( 0.1f );
 }
 
+int lev[20][25]
+{
+	{ 0,1,1,2,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+};
 
+void Client::DrawTileMap()
+{
+	GameObjectPtr tile;
+	float x = 0, y = 0;
+	int type = 0;
+	float width = 0.63f, height = 0.63f;
+
+	for (int row = 0; row < 20; row++) {
+		for (int column = 0; column < 25; column++) {
+			type = lev[row][column];
+
+			tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+			std::shared_ptr<MapClient> tilePiece = std::dynamic_pointer_cast<MapClient>(tile);
+			Vector3 tilelocation = Vector3(x, y, 0.f);
+			tilePiece->SetLocation(tilelocation);
+			
+			//NEED A SetTexture or SetSprite function in Map class
+			
+			switch (type)
+			{
+			case 0: //grass
+				break;
+			case 1: //wall - needs collsion
+				tilePiece->SetSpriteTexture("wall");
+				//tilePiece->SetCollisionRadius(0.5f);
+				break;
+			case 2: //window
+				tilePiece->SetSpriteTexture("window");
+				break;
+			}
+			width = (tilePiece->GetTextureWidth() * 0.01f) - 0.01f;
+			height = (tilePiece->GetTextureHeight() * 0.01f) -0.01f;
+			x += width;
+		}
+		x = 0;
+		y += height;
+	}
+}
 
 void Client::DoFrame()
 {
+	if (!isStarted) {
+		isStarted = true;
+		DrawTileMap();
+	}
+
 	InputManager::sInstance->Update();
 
 	Engine::DoFrame();
