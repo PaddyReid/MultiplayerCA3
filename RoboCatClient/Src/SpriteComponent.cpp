@@ -19,7 +19,6 @@ SpriteComponent::~SpriteComponent()
 	RenderManager::sInstance->RemoveComponent( this );
 }
 
-
 void SpriteComponent::Draw( const SDL_Rect& inViewTransform )
 {
 	if( mTexture )
@@ -34,14 +33,30 @@ void SpriteComponent::Draw( const SDL_Rect& inViewTransform )
 		// Compute the destination rectangle
 		Vector3 objLocation = mGameObject->GetLocation();
 		float objScale = mGameObject->GetScale();
+		SDL_Rect SrcRect;
+
+		//Need to set when picked
+		Vector3 x;
+		x = mGameObject->GetSource();
+
+		SrcRect.x = x.mX;
+		SrcRect.y = x.mY;
+
+		//Not make this magic
+		SrcRect.h = mScale.mX;
+		SrcRect.w = mScale.mY;
+
+
+
+		//ability to set 
 		SDL_Rect dstRect;
-		dstRect.w = static_cast< int >( mTexture->GetWidth() * objScale );
-		dstRect.h = static_cast< int >( mTexture->GetHeight() * objScale );
+		dstRect.w = static_cast< int >(mScale.mX);
+		dstRect.h = static_cast< int >(mScale.mY);
 		dstRect.x = static_cast<int>( objLocation.mX * inViewTransform.w + inViewTransform.x - dstRect.w / 2 );
 		dstRect.y = static_cast<int>( objLocation.mY * inViewTransform.h + inViewTransform.y - dstRect.h / 2 );
 		
 		// Blit the texture
-		SDL_RenderCopyEx( GraphicsDriver::sInstance->GetRenderer(), mTexture->GetData(), nullptr,
+		SDL_RenderCopyEx( GraphicsDriver::sInstance->GetRenderer(), mTexture->GetData(), &SrcRect,
 			&dstRect, RoboMath::ToDegrees( mGameObject->GetRotation() ), nullptr, SDL_FLIP_NONE );
 	}
 }

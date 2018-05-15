@@ -1,5 +1,7 @@
 
 #include <RoboCatClientPCH.h>
+#include <fstream>
+#include <iostream>
 
 bool Client::StaticInit( )
 {
@@ -49,67 +51,53 @@ Client::Client() :
 	//NetworkManagerClient::sInstance->SetSimulatedLatency( 0.1f );
 }
 
-int lev[20][25]
-{
-	{ 0,1,1,2,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,1,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-};
+int lev[30][30];
 
 void Client::DrawTileMap()
 {
+	char mNumberFromFile;
+	int xPosition, yPosition;
+	std::string numb; 
+	std::ifstream myfile;
+	myfile.open("../Assets/mapmap.txt");
 	GameObjectPtr tile;
-	float x = 0, y = 0;
-	int type = 0;
-	float width = 0.63f, height = 0.63f;
+	//TO_DO RUN UNTIL ITS THE SIZE OF FILE
+	//while (!myfile.eof())
+	//{
+	for (float y = -45; y < 50; y++)
+	{
+		for (float x = -40; x < 40; x++)
+		{
+			//Get X and Y Position from File;
+			myfile.get(mNumberFromFile);
+			numb = mNumberFromFile;
+			xPosition = std::stoi(numb);
+			myfile.get(mNumberFromFile);
+			numb = mNumberFromFile;
+			yPosition = std::stoi(numb);
+			myfile.ignore();
 
-	for (int row = 0; row < 20; row++) {
-		for (int column = 0; column < 25; column++) {
-			type = lev[row][column];
-
+			//Create game object for texture
 			tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
 			std::shared_ptr<MapClient> tilePiece = std::dynamic_pointer_cast<MapClient>(tile);
-			Vector3 tilelocation = Vector3(x, y, 0.f);
+
+			//Setup Texture
+			Vector3 tilelocation = Vector3(x * 0.639f, y * 0.639f, 0.f);
 			tilePiece->SetLocation(tilelocation);
-			
-			//NEED A SetTexture or SetSprite function in Map class
-			
-			switch (type)
-			{
-			case 0: //grass
-				break;
-			case 1: //wall - needs collsion
-				tilePiece->SetSpriteTexture("wall");
-				//tilePiece->SetCollisionRadius(0.5f);
-				break;
-			case 2: //window
-				tilePiece->SetSpriteTexture("window");
-				break;
-			}
-			width = (tilePiece->GetTextureWidth() * 0.01f) - 0.01f;
-			height = (tilePiece->GetTextureHeight() * 0.01f) -0.01f;
-			x += width;
+			tilePiece->SetSpriteTexture("world");
+
+			//Get texturemap co-ordinates
+			xPosition *= 64;
+			yPosition *= 64;
+			tilePiece->SetSource(Vector3(xPosition, yPosition, 0));
 		}
-		x = 0;
-		y += height;
 	}
+		
+
+		//find a way to read neaxt line
+		
+	//}
+	myfile.close();
 }
 
 void Client::DoFrame()

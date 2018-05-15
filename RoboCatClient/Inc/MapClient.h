@@ -5,6 +5,9 @@ public:
 	void	SetSpriteTexture(string textureName);
 	int		GetTextureWidth();
 	int		GetTextureHeight();
+
+	SDL_Rect textureSource;
+
 protected:
 	MapClient();
 
@@ -12,4 +15,5 @@ private:
 
 	SpriteComponentPtr	mSpriteComponent;
 	string textureName;
+	
 }; 

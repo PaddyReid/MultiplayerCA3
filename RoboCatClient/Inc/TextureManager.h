@@ -5,6 +5,8 @@ public:
 
 	static std::unique_ptr< TextureManager >		sInstance;
 
+	void createWorld();
+
 	TexturePtr	GetTexture( const string& inTextureName );
 
 private:

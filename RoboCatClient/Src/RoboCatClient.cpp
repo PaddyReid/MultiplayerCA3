@@ -7,6 +7,7 @@ RoboCatClient::RoboCatClient() :
 	mTimeVelocityBecameOutOfSync( 0.f )
 {
 	mSpriteComponent.reset( new SpriteComponent( this ) );
+	mSpriteComponent->SetScale(Vector3(43, 49, 0));
 	mSpriteComponent->SetTexture(TextureManager::sInstance->GetTexture("cat"));
 }
 

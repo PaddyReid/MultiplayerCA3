@@ -12,10 +12,14 @@ public:
 			Vector3		GetOrigin()					const			{ return mOrigin; }
 			void		SetOrigin( const Vector3& inOrigin )		{ mOrigin = inOrigin; }
 
+			Vector3		GetScale()					const { return mScale; }
+			void		SetScale(const Vector3& inScale) { mScale = inScale; }
+
 
 private:
 
 	Vector3											mOrigin;
+	Vector3											mScale;
 
 	TexturePtr										mTexture;
 

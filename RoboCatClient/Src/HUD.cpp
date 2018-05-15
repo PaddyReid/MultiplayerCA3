@@ -13,7 +13,7 @@ mHealth( 0 ),
 mInLobby(true)
 {
 	TTF_Init();
-	mFont = TTF_OpenFont( "../Assets/Carlito-Regular.TTF", 36 );
+	mFont = TTF_OpenFont( "../Assets/GROBOLD.TTF", 36 );
 	if( mFont == nullptr )
 	{
 		SDL_LogError( SDL_LOG_CATEGORY_ERROR, "Failed to load font." );

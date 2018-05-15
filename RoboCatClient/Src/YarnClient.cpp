@@ -3,6 +3,7 @@
 YarnClient::YarnClient()
 {
 	mSpriteComponent.reset( new SpriteComponent( this ) );
+	mSpriteComponent->SetScale(Vector3(10, 19, 0));
 	mSpriteComponent->SetTexture( TextureManager::sInstance->GetTexture( "yarn" ) );
 }
 

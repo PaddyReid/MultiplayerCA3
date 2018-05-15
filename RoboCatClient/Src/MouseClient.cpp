@@ -3,5 +3,6 @@
 MouseClient::MouseClient()
 {
 	mSpriteComponent.reset( new SpriteComponent( this ) );
-	mSpriteComponent->SetTexture( TextureManager::sInstance->GetTexture( "mouse" ) );
+	mSpriteComponent->SetScale(Vector3(25, 20, 0));
+	mSpriteComponent->SetTexture( TextureManager::sInstance->GetTexture( "money" ) );
 }

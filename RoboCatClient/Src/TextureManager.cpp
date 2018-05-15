@@ -11,14 +11,43 @@ void TextureManager::StaticInit()
 
 TextureManager::TextureManager()
 {
-	CacheTexture(	"cat", "../Assets/hitman_Moving.png");
-	CacheTexture(	"grass", "../Assets/Tiles/grass.png");
-	CacheTexture(	"wall", "../Assets/Tiles/wall.png");
-	CacheTexture(	"window", "../Assets/Tiles/window.png");
-	CacheTexture(	"mouse", "../Assets/mouse.png" );
+
+	//Tiles DELETE
+	CacheTexture("grass", "../Assets/Tiles/grass.png");
+	CacheTexture("wall", "../Assets/Tiles/wall.png");
+	CacheTexture("window", "../Assets/Tiles/window.png");
+
+	//Full tilesheet
+	CacheTexture("world", "../Assets/tilesheet.png");
+
+
+	//Props
+	CacheTexture("mouse", "../Assets/mouse.png");
+	CacheTexture("money", "../Assets/money.png");
+
+	//Characters
+	CacheTexture(	"cat", "../Assets/hitman_Moving.png");	
 	CacheTexture(	"yarn", "../Assets/Bullet.png" );
 }
 
+
+void TextureManager::createWorld()
+{
+	float width;
+	float height;
+	
+	int row;
+	int column;
+
+	SDL_Surface* tempSurface = IMG_Load("../Assets/tilesheet.png");
+
+	width = tempSurface->w;
+	height = tempSurface->h;
+
+	//64 is the width of one tile
+	row = width / 64;
+	column = height / 64;
+}
 
 TexturePtr	TextureManager::GetTexture( const string& inTextureName )
 {

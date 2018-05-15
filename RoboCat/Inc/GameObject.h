@@ -37,6 +37,9 @@ public:
 	const Vector3&		GetLocation()				const				{ return mLocation; }
 			void		SetLocation( const Vector3& inLocation )		{ mLocation = inLocation; }
 
+	const Vector3&		GetSource()					const				{ return mSource; }
+			void		SetSource(const Vector3& inGetSource)			{ mSource = inGetSource; }
+
 			float		GetCollisionRadius()		const				{ return mCollisionRadius; }
 			void		SetCollisionRadius( float inRadius )			{ mCollisionRadius = inRadius; }
 
@@ -57,7 +60,7 @@ public:
 
 private:
 
-
+	Vector3											mSource;
 	Vector3											mLocation;
 	Vector3											mColor;
 	
