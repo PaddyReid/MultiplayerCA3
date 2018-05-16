@@ -93,8 +93,22 @@ void Server::DoFrame()
 	float deltaTime = Timing::sInstance.GetDeltaTime();
 	mTimeElapsed += deltaTime;
 	if (mTimeElapsed > 1) {
-		if (LobbyManager::sInstance->IsEveryoneReady()) {
-			LobbyManager::sInstance->DecrementTimeToGameStart();
+		if (LobbyManager::sInstance->IsGamePlaying()) {
+			//handle game timer
+			if (LobbyManager::sInstance->GetMatchTimer() == 0) {
+				LobbyManager::sInstance->ResetGame();
+			}
+			else {
+				LobbyManager::sInstance->DecrementMatchTimer();
+			}
+			
+		}
+		else if (LobbyManager::sInstance->IsEveryoneReady()) 
+		{
+			if (LobbyManager::sInstance->GetTimeToGameStart() == 0) 
+				LobbyManager::sInstance->StartGame();
+			else
+				LobbyManager::sInstance->DecrementTimeToGameStart();
 		}
 		mTimeElapsed = 0;
 	}

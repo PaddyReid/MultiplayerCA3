@@ -9,7 +9,8 @@ void LobbyManager::StaticInit()
 }
 
 LobbyManager::LobbyManager() :
-	mEveryoneReady(false)
+	mEveryoneReady(false),
+	mGamePlaying(false)
 {
 	mDefaultColors.push_back(Colors::LightYellow);
 	mDefaultColors.push_back(Colors::LightBlue);
@@ -90,56 +91,81 @@ void LobbyManager::ChangeReadyState(uint32_t inPlayerId, bool inReadyState)
 
 void LobbyManager::CheckPlayerCount()
 {
-	int readyPlayers = 0;
-	bool alreadyEveryoneReady = IsEveryoneReady();
-	for (LobbyPlayer& entry : mEntries)
+	if (mGamePlaying) 
 	{
-		if (entry.GetReadyState())
-			readyPlayers++;
-	}
-
-	if (readyPlayers == mEntries.size() && readyPlayers != 0)
-		SetEveryoneReady(true);
-	else
-		SetEveryoneReady(false);
-
-
-	if (IsEveryoneReady() && !alreadyEveryoneReady) {
-		//Changes to ready
-		ResetTimeToGameStart();
-	} else {
-		//Changes to not ready
-	}
-
-	//when not everyone ready
-	if (!IsEveryoneReady()) {
 		for (LobbyPlayer& entry : mEntries)
 		{
-			std::string message = "Click Space to ready up";
-			if (mEntries.size() < 2)
-				message = "Waiting for 2nd Player";
-			else if (entry.GetReadyState()) {
-				message = "Waiting on " + std::to_string(readyPlayers) + " number of players to ready up";
-			}
+			//match running, don't mess with lobby setup
+			// handle game Timer
+			std::string message = "Time Remaining : " + std::to_string(GetMatchTimer());
 			entry.SetLobbyMessage(message);
 		}
-	} //when everyone ready
-	else {
+	}
+	else 
+	{
+		int readyPlayers = 0;
+		bool alreadyEveryoneReady = IsEveryoneReady();
 		for (LobbyPlayer& entry : mEntries)
 		{
-			entry.SetLobbyMessage("Match Begining in " + std::to_string(GetTimeToGameStart()));
+			if (entry.GetReadyState())
+				readyPlayers++;
+		}
+
+		if (readyPlayers == mEntries.size() && readyPlayers != 0)
+			SetEveryoneReady(true);
+		else
+			SetEveryoneReady(false);
+
+
+		if (IsEveryoneReady() && !alreadyEveryoneReady) {
+			//Changes to ready
+			ResetTimeToGameStart();
+		}
+		else {
+			//Changes to not ready
+		}
+
+		//when not everyone ready
+		if (!IsEveryoneReady()) {
+			for (LobbyPlayer& entry : mEntries)
+			{
+				std::string message = "Click Space to ready up";
+				if (mEntries.size() < 2)
+					message = "Waiting for 2nd Player";
+				else if (entry.GetReadyState()) {
+					message = "Waiting on " + std::to_string(readyPlayers) + " player(s) to ready up";
+				}
+				entry.SetLobbyMessage(message);
+			}
+		} //when everyone ready
+		else {
+			for (LobbyPlayer& entry : mEntries)
+			{
+				entry.SetLobbyMessage("Match Beginning in " + std::to_string(GetTimeToGameStart()));
+			}
 		}
 	}
 }
 
 void LobbyManager::ResetTimeToGameStart()
 {
-	mTimeToGameStart = 15;
+	mTimeToGameStart = TIME_TO_GAME_START;
 }
 
 void LobbyManager::DecrementTimeToGameStart()
 {
 	mTimeToGameStart--;
+	CheckPlayerCount();
+}
+
+void LobbyManager::ResetMatchTimer()
+{
+	mMatchTimer = MATCH_TIMER;
+}
+
+void LobbyManager::DecrementMatchTimer()
+{
+	mMatchTimer--;
 	CheckPlayerCount();
 }
 
@@ -155,12 +181,12 @@ bool LobbyManager::Write(OutputMemoryBitStream& inOutputStream) const
 	{
 		entry.Write(inOutputStream);
 	}
-	inOutputStream.Write(mTimeToGameStart);
 
+	inOutputStream.Write(mTimeToGameStart);
+	inOutputStream.Write(mMatchTimer);
+	inOutputStream.Write(mGamePlaying);
 	return true;
 }
-
-
 
 bool LobbyManager::Read(InputMemoryBitStream& inInputStream)
 {
@@ -172,9 +198,18 @@ bool LobbyManager::Read(InputMemoryBitStream& inInputStream)
 	{
 		entry.Read(inInputStream);
 	}
+
 	int timeToGameStart;
 	inInputStream.Read(timeToGameStart);
 	SetTimeToGameStart(timeToGameStart);
+
+	int matchTimer;
+	inInputStream.Read(matchTimer);
+	SetMatchTimer(matchTimer);
+
+	bool gamePlaying;
+	inInputStream.Read(gamePlaying);
+	SetGamePlaying(gamePlaying);
 
 	return true;
 }
@@ -182,6 +217,11 @@ bool LobbyManager::Read(InputMemoryBitStream& inInputStream)
 void LobbyManager::SetEveryoneReady(bool inEveryoneReady)
 {
 	mEveryoneReady = inEveryoneReady;
+}
+
+void LobbyManager::SetGamePlaying(bool gamePlaying)
+{
+	mGamePlaying = gamePlaying;
 }
 
 int LobbyManager::GetTimeToGameStart() const
@@ -193,6 +233,33 @@ void LobbyManager::SetTimeToGameStart(int newTime)
 {
 	mTimeToGameStart = newTime;
 	CheckPlayerCount();
+}
+
+int LobbyManager::GetMatchTimer() const
+{
+	return mMatchTimer;
+}
+
+void LobbyManager::SetMatchTimer(int matchTimer)
+{
+	mMatchTimer = matchTimer;
+	CheckPlayerCount();
+}
+
+void LobbyManager::StartGame()
+{
+	//read scores from file
+	ResetMatchTimer();
+	mGamePlaying = true;
+	CheckPlayerCount();
+}
+
+void LobbyManager::ResetGame()
+{
+	mGamePlaying = false;
+	ResetTimeToGameStart();
+	SetEveryoneReady(false);
+	//save scores to file
 }
 
 

@@ -44,16 +44,27 @@ public:
 	void	CheckPlayerCount();
 	void	ResetTimeToGameStart();
 	void	DecrementTimeToGameStart();
+	void	ResetMatchTimer();
+	void	DecrementMatchTimer();
+
 	bool	Write(OutputMemoryBitStream& inOutputStream) const;
 	bool	Read(InputMemoryBitStream& inInputStream);
 	bool	IsEveryoneReady() const { return mEveryoneReady; }
+	bool	IsGamePlaying() const { return mGamePlaying; }
 	void	SetEveryoneReady(bool inEveryoneReady);
+	void	SetGamePlaying(bool gamePlaying);
 	int		GetTimeToGameStart() const;
 	void    SetTimeToGameStart(int newTime);
+	int		GetMatchTimer() const;
+	void    SetMatchTimer(int matchTimer);
+	void	StartGame(); 
+	void	ResetGame();
 
 	const vector< LobbyPlayer >&	GetEntries()	const { return mEntries; }
 
 private:
+	int MATCH_TIMER = 10;
+	int TIME_TO_GAME_START = 5;
 
 	LobbyManager();
 
@@ -62,5 +73,7 @@ private:
 	vector< Vector3 >	mDefaultColors;
 
 	int mTimeToGameStart;
+	int mMatchTimer;
 	bool mEveryoneReady;
+	bool mGamePlaying;
 };
