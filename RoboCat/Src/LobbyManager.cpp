@@ -133,7 +133,7 @@ void LobbyManager::CheckPlayerCount()
 				if (mEntries.size() < 2)
 					message = "Waiting for 2nd Player";
 				else if (entry.GetReadyState()) {
-					message = "Waiting on " + std::to_string(readyPlayers) + " player(s) to ready up";
+					message = "Waiting on " + std::to_string(mEntries.size() - readyPlayers) + " player(s) to ready up";
 				}
 				entry.SetLobbyMessage(message);
 			}
@@ -259,6 +259,9 @@ void LobbyManager::ResetGame()
 	mGamePlaying = false;
 	ResetTimeToGameStart();
 	SetEveryoneReady(false);
+	for (LobbyPlayer entry : GetEntries()) {
+		entry.SetReadyState(false);
+	}
 	//save scores to file
 }
 
