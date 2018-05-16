@@ -47,12 +47,12 @@ public:
 
 
 			void		SetColor( const Vector3& inColor )					{ mColor = inColor; }
-	const Vector3&		GetColor()					const				{ return mColor; }
+	const Vector3&		GetColor()					const					{ return mColor; }
 
-			bool		DoesWantToDie()				const				{ return mDoesWantToDie; }
-			void		SetDoesWantToDie( bool inWants )				{ mDoesWantToDie = inWants; }
+			bool		DoesWantToDie()				const					{ return mDoesWantToDie; }
+			void		SetDoesWantToDie( bool inWants )					{ mDoesWantToDie = inWants; }
 
-			int			GetNetworkId()				const				{ return mNetworkId; }
+			int			GetNetworkId()				const					{ return mNetworkId; }
 			void		SetNetworkId( int inNetworkId );
 
 	virtual uint32_t	Write( OutputMemoryBitStream& inOutputStream, uint32_t inDirtyState ) const	{ (void)inOutputStream; (void)inDirtyState; return 0; }

@@ -1,7 +1,5 @@
 #include <RoboCatClientPCH.h>
 
-
-
 RoboCatClient::RoboCatClient() :
 	mTimeLocationBecameOutOfSync( 0.f ),
 	mTimeVelocityBecameOutOfSync( 0.f ),
@@ -19,6 +17,7 @@ void RoboCatClient::HandleDying()
 	//and if we're local, tell the hud so our health goes away!
 	if( GetPlayerId() == NetworkManagerClient::sInstance->GetPlayerId() )
 	{
+		
 		HUD::sInstance->SetPlayerHealth( 0 );
 	}
 }
@@ -171,8 +170,6 @@ void RoboCatClient::Read( InputMemoryBitStream& inInputStream )
 
 	}
 }
-
-
 
 
 void RoboCatClient::DoClientSidePredictionAfterReplicationForLocalCat( uint32_t inReadState )

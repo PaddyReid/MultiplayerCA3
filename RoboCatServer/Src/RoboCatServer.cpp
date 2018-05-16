@@ -86,12 +86,16 @@ void RoboCatServer::TakeDamage( int inDamagingPlayerId )
 		//and you want to die
 		SetDoesWantToDie( true );
 
+		//Player drop money
+
 		//tell the client proxy to make you a new cat
 		ClientProxyPtr clientProxy = NetworkManagerServer::sInstance->GetClientProxy( GetPlayerId() );
 		if( clientProxy )
 		{
 			clientProxy->HandleCatDied();
 		}
+
+
 	}
 
 	//tell the world our health dropped

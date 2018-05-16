@@ -34,7 +34,11 @@ public:
 	void			SetVelocity( const Vector3& inVelocity )	{ mVelocity = inVelocity; }
 	const Vector3&	GetVelocity()						const	{ return mVelocity; }
 
+
+
 	virtual uint32_t	Write( OutputMemoryBitStream& inOutputStream, uint32_t inDirtyState ) const override;
+
+
 
 protected:
 	RoboCat();
@@ -65,6 +69,7 @@ protected:
 
 	float				mThrustDir;
 	int					mHealth;
+	bool				mHasMoney;
 
 	bool				mIsShooting;
 

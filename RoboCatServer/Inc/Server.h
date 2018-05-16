@@ -24,6 +24,7 @@ public:
 	void	SaveHighScores();
 	int		GetHighScore(int playerId);
 	Vector3	GetSpawnLocation(int inPlayerId);
+	void	DropMoney(Vector3 pos);
 
 private:
 	Server();
