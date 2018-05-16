@@ -34,6 +34,7 @@ void RoboCatServer::Update()
 				float deltaTime = unprocessedMove.GetDeltaTime();
 
 				ProcessInput( deltaTime, currentState );
+				LobbyManager::sInstance->ChangeReadyState(GetPlayerId(), currentState.IsReady());
 				SimulateMovement( deltaTime );
 
 				//LOG( "Server Move Time: %3.4f deltaTime: %3.4f left rot at %3.4f", unprocessedMove.GetTimestamp(), deltaTime, GetRotation() );
@@ -95,4 +96,9 @@ void RoboCatServer::TakeDamage( int inDamagingPlayerId )
 
 	//tell the world our health dropped
 	NetworkManagerServer::sInstance->SetStateDirty( GetNetworkId(), ECRS_Health );
+}
+
+void RoboCatServer::SetReadyState(int inPlayerId, bool readyState)
+{
+	LobbyManager::sInstance->ChangeReadyState(inPlayerId, readyState);
 }

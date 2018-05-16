@@ -8,7 +8,8 @@ void LobbyManager::StaticInit()
 	sInstance.reset(new LobbyManager());
 }
 
-LobbyManager::LobbyManager()
+LobbyManager::LobbyManager() :
+	mEveryoneReady(false)
 {
 	mDefaultColors.push_back(Colors::LightYellow);
 	mDefaultColors.push_back(Colors::LightBlue);
@@ -90,39 +91,24 @@ void LobbyManager::ChangeReadyState(uint32_t inPlayerId, bool inReadyState)
 void LobbyManager::CheckPlayerCount()
 {
 	int readyPlayers = 0;
-	
-	if (!IsEveryoneReady()) {
-		for (LobbyPlayer& entry : mEntries)
-		{
-			if (entry.GetReadyState())
-				readyPlayers++;
-
-			//if all players are ready mark that all are ready
-			if (readyPlayers != mEntries.size())
-				SetEveryoneReady(false);
-			else 
-				SetEveryoneReady(true);
-		}
-		if (IsEveryoneReady()) {
-			//Changes to ready
-			ResetTimeToGameStart();
-		}
+	bool alreadyEveryoneReady = IsEveryoneReady();
+	for (LobbyPlayer& entry : mEntries)
+	{
+		if (entry.GetReadyState())
+			readyPlayers++;
 	}
-	else {
-		for (LobbyPlayer& entry : mEntries)
-		{
-			if (entry.GetReadyState())
-				readyPlayers++;
 
-			//if all players are ready mark that all are ready
-			if (readyPlayers != mEntries.size())
-				SetEveryoneReady(false);
-			else
-				SetEveryoneReady(true);
-		}
-		if (!IsEveryoneReady()) {
-			//Changes to not ready
-		}
+	if (readyPlayers == mEntries.size() && readyPlayers != 0)
+		SetEveryoneReady(true);
+	else
+		SetEveryoneReady(false);
+
+
+	if (IsEveryoneReady() && !alreadyEveryoneReady) {
+		//Changes to ready
+		ResetTimeToGameStart();
+	} else {
+		//Changes to not ready
 	}
 
 	//when not everyone ready
@@ -130,19 +116,18 @@ void LobbyManager::CheckPlayerCount()
 		for (LobbyPlayer& entry : mEntries)
 		{
 			std::string message = "Click Space to ready up";
-			if (entry.GetReadyState()) {
-				message = "Waiting on " + readyPlayers;
-				message += " number of players to ready up";
-			}
-			else if (mEntries.size() < 2)
+			if (mEntries.size() < 2)
 				message = "Waiting for 2nd Player";
+			else if (entry.GetReadyState()) {
+				message = "Waiting on " + std::to_string(readyPlayers) + " number of players to ready up";
+			}
 			entry.SetLobbyMessage(message);
 		}
 	} //when everyone ready
 	else {
 		for (LobbyPlayer& entry : mEntries)
 		{
-			entry.SetLobbyMessage("Match Begining in " + GetTimeToGameStart());
+			entry.SetLobbyMessage("Match Begining in " + std::to_string(GetTimeToGameStart()));
 		}
 	}
 }
@@ -152,6 +137,11 @@ void LobbyManager::ResetTimeToGameStart()
 	mTimeToGameStart = 15;
 }
 
+void LobbyManager::DecrementTimeToGameStart()
+{
+	mTimeToGameStart--;
+	CheckPlayerCount();
+}
 
 
 bool LobbyManager::Write(OutputMemoryBitStream& inOutputStream) const
@@ -165,6 +155,7 @@ bool LobbyManager::Write(OutputMemoryBitStream& inOutputStream) const
 	{
 		entry.Write(inOutputStream);
 	}
+	inOutputStream.Write(mTimeToGameStart);
 
 	return true;
 }
@@ -181,6 +172,9 @@ bool LobbyManager::Read(InputMemoryBitStream& inInputStream)
 	{
 		entry.Read(inInputStream);
 	}
+	int timeToGameStart;
+	inInputStream.Read(timeToGameStart);
+	SetTimeToGameStart(timeToGameStart);
 
 	return true;
 }
@@ -193,6 +187,12 @@ void LobbyManager::SetEveryoneReady(bool inEveryoneReady)
 int LobbyManager::GetTimeToGameStart() const
 {
 	return mTimeToGameStart;
+}
+
+void LobbyManager::SetTimeToGameStart(int newTime)
+{
+	mTimeToGameStart = newTime;
+	CheckPlayerCount();
 }
 
 
@@ -216,7 +216,12 @@ bool LobbyManager::LobbyPlayer::Read(InputMemoryBitStream& inInputStream)
 	inInputStream.Read(mColor);
 	inInputStream.Read(mPlayerId);
 	inInputStream.Read(mPlayerName);
-	inInputStream.Read(mReadyState);
+	int readyState;
+	inInputStream.Read(readyState);
+	if (didSucceed) {
+		SetReadyState(readyState);
+	}
+
 	inInputStream.Read(mLobbyMessage);
 	inInputStream.Read(mFormattedNameReadyState);
 	return didSucceed;

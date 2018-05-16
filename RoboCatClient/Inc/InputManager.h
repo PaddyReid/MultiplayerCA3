@@ -9,6 +9,8 @@ public:
 
 	void HandleInput( EInputAction inInputAction, int inKeyCode );
 
+	void HandleInputOnce(EInputAction inInputAction, int inKeyCode);
+
 
 	const InputState& GetState()	const	{ return mCurrentState; }
 

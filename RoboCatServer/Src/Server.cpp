@@ -7,7 +7,8 @@ bool Server::StaticInit()
 	return true;
 }
 
-Server::Server()
+Server::Server() :
+	mTimeElapsed(0)
 {
 
 	
@@ -89,6 +90,14 @@ void Server::SetupWorld()
 
 void Server::DoFrame()
 {
+	float deltaTime = Timing::sInstance.GetDeltaTime();
+	mTimeElapsed += deltaTime;
+	if (mTimeElapsed > 1) {
+		if (LobbyManager::sInstance->IsEveryoneReady()) {
+			LobbyManager::sInstance->DecrementTimeToGameStart();
+		}
+		mTimeElapsed = 0;
+	}
 	NetworkManagerServer::sInstance->ProcessIncomingPackets();
 
 	NetworkManagerServer::sInstance->CheckForDisconnects();

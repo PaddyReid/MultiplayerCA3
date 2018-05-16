@@ -21,6 +21,6 @@ private:
 
 	bool	InitNetworkManager();
 	void	SetupWorld();
-	
+	float	mTimeElapsed;
 
 };

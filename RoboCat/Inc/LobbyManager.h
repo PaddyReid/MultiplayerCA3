@@ -43,11 +43,13 @@ public:
 	void	ChangeReadyState(uint32_t inPlayerId, bool inReadyState);
 	void	CheckPlayerCount();
 	void	ResetTimeToGameStart();
+	void	DecrementTimeToGameStart();
 	bool	Write(OutputMemoryBitStream& inOutputStream) const;
 	bool	Read(InputMemoryBitStream& inInputStream);
 	bool	IsEveryoneReady() const { return mEveryoneReady; }
 	void	SetEveryoneReady(bool inEveryoneReady);
-	int GetTimeToGameStart() const;
+	int		GetTimeToGameStart() const;
+	void    SetTimeToGameStart(int newTime);
 
 	const vector< LobbyPlayer >&	GetEntries()	const { return mEntries; }
 
