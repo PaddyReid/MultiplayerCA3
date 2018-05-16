@@ -30,7 +30,7 @@ void ScoreBoardManager::Entry::SetScore( int32_t inScore )
 	mScore = inScore;
 
 	char	buffer[ 256 ];
-	snprintf( buffer, 256, "%s %i", mPlayerName.c_str(), mScore );
+	snprintf( buffer, 256, "%s $%i", mPlayerName.c_str(), mScore );
 	mFormattedNameScore = string( buffer );
 
 }

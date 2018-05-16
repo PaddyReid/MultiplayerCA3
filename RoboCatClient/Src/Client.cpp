@@ -114,22 +114,32 @@ void Client::DoFrame()
 
 void Client::HandleEvent( SDL_Event* inEvent )
 {
-	switch( inEvent->type )
-	{
-	case SDL_KEYDOWN:
-			InputManager::sInstance->HandleInput(EIA_Pressed, inEvent->key.keysym.sym);
-		break;
-	case SDL_KEYUP:
-			InputManager::sInstance->HandleInput(EIA_Released, inEvent->key.keysym.sym);
-		break;
-	//case SDL_MOUSEBUTTONDOWN:
-	//	InputManager::sInstance->HandleInput(EIA_Pressed, inEvent->key.keysym.sym);
-	//	break;
-	//case SDL_MOUSEBUTTONUP:
-	//	InputManager::sInstance->HandleInput(EIA_Released, inEvent->key.keysym.sym);
-	//	break;
-	default:
-		break;
+	if (inEvent->key.repeat == 0) {
+		switch (inEvent->type)
+		{
+		case SDL_KEYDOWN:
+			InputManager::sInstance->HandleInputOnce(EIA_PressedOnce, inEvent->key.keysym.sym);
+			break;
+		case SDL_KEYUP:
+			InputManager::sInstance->HandleInputOnce(EIA_ReleasedOnce, inEvent->key.keysym.sym);
+			break;
+		default:
+			break;
+		}
 	}
+	else {
+		switch (inEvent->type)
+		{
+		case SDL_KEYDOWN:
+			InputManager::sInstance->HandleInput(EIA_Pressed, inEvent->key.keysym.sym);
+			break;
+		case SDL_KEYUP:
+			InputManager::sInstance->HandleInput(EIA_Released, inEvent->key.keysym.sym);
+			break;
+		default:
+			break;
+		}
+	}
+	
 }
 

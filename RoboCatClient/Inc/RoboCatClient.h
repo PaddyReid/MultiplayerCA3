@@ -23,6 +23,6 @@ private:
 
 	float				mTimeLocationBecameOutOfSync;
 	float				mTimeVelocityBecameOutOfSync;
-	
+	bool				mGamePlaying;
 	SpriteComponentPtr	mSpriteComponent;
 };

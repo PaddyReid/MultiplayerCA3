@@ -23,7 +23,6 @@ private:
 
 			
 			int		DoRunLoop();
-
 			bool	mShouldKeepRunning;
 
 

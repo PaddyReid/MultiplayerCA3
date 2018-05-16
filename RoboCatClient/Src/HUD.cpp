@@ -6,7 +6,7 @@ std::unique_ptr< HUD >	HUD::sInstance;
 HUD::HUD() :
 mScoreBoardOrigin( 50.f, 60.f, 0.0f ),
 mBandwidthOrigin( 50.f, 10.f, 0.0f ),
-mRoundTripTimeOrigin( 50.f, 10.f, 0.0f ),
+mRoundTripTimeOrigin( 800.f, 600.f, 0.0f ),
 mScoreOffset( 0.f, 50.f, 0.0f ),
 mHealthOffset( 1000, 10.f, 0.0f ),
 mPositionOffset(600, 10.f, 0.0f),
@@ -32,15 +32,27 @@ void HUD::Render()
 {
 	RenderPosition();
 	//RenderRoundTripTime();
+	
+	if (LobbyManager::sInstance->IsGamePlaying()) {
+		RenderGameTimer();
 	RenderHealth();
 	RenderMoney();
-
-	if (InLobby()) {
-		RenderLobby();
-	}
-	else {
 		RenderScoreBoard();
 		RenderHealth();
+	}
+	else {
+		RenderLobby();
+	}
+}
+
+void HUD::RenderGameTimer() {
+	const vector< LobbyManager::LobbyPlayer >& entries = LobbyManager::sInstance->GetEntries();
+
+	Vector3 offset = Vector3(800.f, 10.f, 0.0f);
+	for (const auto& entry : entries)
+	{
+		if (entry.GetPlayerId() == NetworkManagerClient::sInstance->GetPlayerId())
+		RenderText(entry.GetLobbyMessage(), offset, Colors::White);
 	}
 }
 

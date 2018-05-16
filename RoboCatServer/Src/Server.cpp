@@ -7,9 +7,11 @@ bool Server::StaticInit()
 	return true;
 }
 
-Server::Server()
+Server::Server() :
+	mTimeElapsed(0),
+	mSpawnLocations()
 {
-
+	SetupSpawnLocation();
 	
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'MOUS', MouseServer::StaticCreate );
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'YARN', YarnServer::StaticCreate );
@@ -70,11 +72,38 @@ void Server::DrawTileMap()
 	tile->SetLocation(tilelocation);
 }
 
+void Server::SetupSpawnLocation()
+{
+	mSpawnLocations.push_back(Vector3(0, 0, 0)); //1
+	mSpawnLocations.push_back(Vector3(3, 0, 0)); //2
+	mSpawnLocations.push_back(Vector3(6, 0, 0)); //3
+	mSpawnLocations.push_back(Vector3(9, 0, 0)); //4
+	mSpawnLocations.push_back(Vector3(12, 0, 0)); //5
+	mSpawnLocations.push_back(Vector3(0, 3, 0)); //6
+	mSpawnLocations.push_back(Vector3(0, 6, 0)); //7
+	mSpawnLocations.push_back(Vector3(0, 9, 0)); //8
+	mSpawnLocations.push_back(Vector3(0, 12, 0)); //9
+	mSpawnLocations.push_back(Vector3(3, 12, 0)); //10
+	mSpawnLocations.push_back(Vector3(6, 12, 0)); //11
+	mSpawnLocations.push_back(Vector3(9, 12, 0)); //12
+	mSpawnLocations.push_back(Vector3(12, 12, 0)); //13
+	mSpawnLocations.push_back(Vector3(12, 3, 0)); //14
+	mSpawnLocations.push_back(Vector3(12, 6, 0)); //15
+	mSpawnLocations.push_back(Vector3(12, 9, 0)); //16
+}
 void Server::DropMoney(Vector3 pos)
 {
 	GameObjectPtr go;
 	go = GameObjectRegistry::sInstance->CreateGameObject('MOUS');
 	go->SetLocation(pos);
+}
+
+Vector3 Server::GetSpawnLocation(int inPlayerId)
+{
+	if(inPlayerId<17)
+		return mSpawnLocations.at(inPlayerId - 1);
+	else
+		return mSpawnLocations.at(0);
 }
 
 void Server::SetupWorld()
@@ -92,6 +121,28 @@ void Server::SetupWorld()
 
 void Server::DoFrame()
 {
+	float deltaTime = Timing::sInstance.GetDeltaTime();
+	mTimeElapsed += deltaTime;
+	if (mTimeElapsed > 1) {
+		if (LobbyManager::sInstance->IsGamePlaying()) {
+			//handle game timer
+			if (LobbyManager::sInstance->GetMatchTimer() == 0) {
+				LobbyManager::sInstance->ResetGame();
+			}
+			else {
+				LobbyManager::sInstance->DecrementMatchTimer();
+			}
+			
+		}
+		else if (LobbyManager::sInstance->IsEveryoneReady()) 
+		{
+			if (LobbyManager::sInstance->GetTimeToGameStart() == 0) 
+				LobbyManager::sInstance->StartGame();
+			else
+				LobbyManager::sInstance->DecrementTimeToGameStart();
+		}
+		mTimeElapsed = 0;
+	}
 	NetworkManagerServer::sInstance->ProcessIncomingPackets();
 
 	NetworkManagerServer::sInstance->CheckForDisconnects();
@@ -123,7 +174,10 @@ void Server::SpawnCatForPlayer( int inPlayerId )
 	//DropMoney(cat->GetLocation());
 
 	//TO-DO set spawn locations
-	cat->SetLocation( Vector3( 1.f - static_cast< float >( inPlayerId ), 0.f, 0.f ) );
+
+	cat->SetLocation(GetSpawnLocation(inPlayerId));
+
+
 }
 
 void Server::HandleLostClient( ClientProxyPtr inClientProxy )

@@ -2,7 +2,8 @@
 
 RoboCatClient::RoboCatClient() :
 	mTimeLocationBecameOutOfSync( 0.f ),
-	mTimeVelocityBecameOutOfSync( 0.f )
+	mTimeVelocityBecameOutOfSync( 0.f ),
+	mGamePlaying(false)
 {
 	mSpriteComponent.reset( new SpriteComponent( this ) );
 	mSpriteComponent->SetScale(Vector3(43, 49, 0));
@@ -45,6 +46,19 @@ void RoboCatClient::Update()
 		}
 		//Set camera viewport to follow player
 		RenderManager::sInstance->SetCamera(GetLocation());
+
+
+		if (mGamePlaying != LobbyManager::sInstance->IsGamePlaying()) {
+			//game state has changed
+			//flush moves
+			InputManager::sInstance->HandleInput(EIA_Released, SDLK_w);
+			InputManager::sInstance->HandleInput(EIA_Released, SDLK_a);
+			InputManager::sInstance->HandleInput(EIA_Released, SDLK_s);
+			InputManager::sInstance->HandleInput(EIA_Released, SDLK_d);
+			InputManager::sInstance->HandleInput(EIA_Released, SDLK_SPACE);
+
+			mGamePlaying = LobbyManager::sInstance->IsGamePlaying();
+		}
 	}
 	else
 	{
