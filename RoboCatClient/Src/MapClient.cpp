@@ -9,6 +9,7 @@ MapClient::MapClient() :
 
 void MapClient::SetSpriteTexture(string _textureName) {
 	textureName = _textureName;
+	mSpriteComponent->SetScale(Vector3(128, 128, 0));
 	mSpriteComponent->SetTexture(TextureManager::sInstance->GetTexture(textureName));
 }
 

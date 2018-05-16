@@ -1,4 +1,7 @@
 #include <RoboCatServerPCH.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 bool Server::StaticInit()
 {
@@ -9,17 +12,18 @@ bool Server::StaticInit()
 
 Server::Server() :
 	mTimeElapsed(0),
-	mSpawnLocations()
+	mSpawnLocations(),
+	highScores()
 {
 	SetupSpawnLocation();
 	
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'MOUS', MouseServer::StaticCreate );
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'YARN', YarnServer::StaticCreate );
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'GRAS', MapServer::StaticCreate);
-	GameObjectRegistry::sInstance->RegisterCreationFunction('RCAT', RoboCatServer::StaticCreate);
+	GameObjectRegistry::sInstance->RegisterCreationFunction( 'RCAT', RoboCatServer::StaticCreate);
 
 	InitNetworkManager();
-	
+	LoadHighScores();
 	//NetworkManagerServer::sInstance->SetDropPacketChance( 0.8f );
 	//NetworkManagerServer::sInstance->SetSimulatedLatency( 0.25f );
 	//NetworkManagerServer::sInstance->SetSimulatedLatency( 0.5f );
@@ -91,6 +95,24 @@ void Server::SetupSpawnLocation()
 	mSpawnLocations.push_back(Vector3(12, 3, 0)); //14
 	mSpawnLocations.push_back(Vector3(12, 6, 0)); //15
 	mSpawnLocations.push_back(Vector3(12, 9, 0)); //16
+}
+
+void Server::LoadHighScores()
+{
+	std::string buffer;
+	std::ifstream scorefile;
+	scorefile.open("../Assets/score.txt");
+
+	scorefile.close();
+}
+
+void Server::SaveHighScores()
+{
+}
+
+int Server::GetHighScore(int playerId)
+{
+	return 0;
 }
 
 Vector3 Server::GetSpawnLocation(int inPlayerId)
@@ -165,14 +187,7 @@ void Server::SpawnCatForPlayer( int inPlayerId )
 	RoboCatPtr cat = std::static_pointer_cast< RoboCat >( GameObjectRegistry::sInstance->CreateGameObject( 'RCAT' ) );
 	cat->SetColor( ScoreBoardManager::sInstance->GetEntry( inPlayerId )->GetColor() );
 	cat->SetPlayerId( inPlayerId );
-	
-	//gotta pick a better spawn location than this...
-
-	//TO-DO set spawn locations
-
 	cat->SetLocation(GetSpawnLocation(inPlayerId));
-
-
 }
 
 void Server::HandleLostClient( ClientProxyPtr inClientProxy )

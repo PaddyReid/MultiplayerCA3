@@ -16,7 +16,7 @@ public:
 		uint32_t		GetPlayerId()	const	{ return mPlayerId; }
 		const string&	GetPlayerName()	const	{ return mPlayerName; }
 		const string&	GetFormattedNameScore()	const	{ return mFormattedNameScore; }
-		int				GetScore()		const	{ return mScore; }
+		int				GetScore()			{ return mScore; }
 
 		void			SetScore( int inScore );
 
@@ -32,18 +32,22 @@ public:
 		int				mScore;
 
 		string			mFormattedNameScore;
+		
 	};
 
 	Entry*	GetEntry( uint32_t inPlayerId );
 	bool	RemoveEntry( uint32_t inPlayerId );
 	void	AddEntry( uint32_t inPlayerId, const string& inPlayerName );
+	void	SaveScore(uint32_t inPlayerId);
+	void	LoadScore(uint32_t inPlayerId);
 	void	IncScore( uint32_t inPlayerId, int inAmount );
 
 	bool	Write( OutputMemoryBitStream& inOutputStream ) const;
 	bool	Read( InputMemoryBitStream& inInputStream );
 
-	const vector< Entry >&	GetEntries()	const	{ return mEntries; }
-
+	vector< Entry >&	GetEntries()		{ return mEntries; }
+	
+	
 private:
 
 	ScoreBoardManager();
