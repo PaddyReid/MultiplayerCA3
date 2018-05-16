@@ -13,8 +13,8 @@ Server::Server()
 	
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'MOUS', MouseServer::StaticCreate );
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'YARN', YarnServer::StaticCreate );
-	GameObjectRegistry::sInstance->RegisterCreationFunction( 'GRAS', MapServer::StaticCreate);
-	GameObjectRegistry::sInstance->RegisterCreationFunction('RCAT', RoboCatServer::StaticCreate);
+	GameObjectRegistry::sInstance->RegisterCreationFunction( 'GRAS', MapServer::StaticCreate );
+	GameObjectRegistry::sInstance->RegisterCreationFunction( 'RCAT', RoboCatServer::StaticCreate );
 
 	InitNetworkManager();
 	
@@ -68,19 +68,22 @@ void Server::DrawTileMap()
 	tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
 	Vector3 tilelocation = Vector3(0.f, 0.f, 0.f);
 	tile->SetLocation(tilelocation);
-	
 }
 
-
-
+void Server::DropMoney(Vector3 pos)
+{
+	GameObjectPtr go;
+	go = GameObjectRegistry::sInstance->CreateGameObject('MOUS');
+	go->SetLocation(pos);
+}
 
 void Server::SetupWorld()
 {
 	//spawn some random mice
-	CreateRandomMice( 10 );
-	
+	//CreateRandomMice( 10 );
+
 	//spawn more random mice!
-	CreateRandomMice( 10 );
+	CreateRandomMice( 2 );
 
 	//Draw tile map
 	//Change to power ups??
@@ -98,7 +101,6 @@ void Server::DoFrame()
 	Engine::DoFrame();
 
 	NetworkManagerServer::sInstance->SendOutgoingPackets();
-
 }
 
 void Server::HandleNewClient( ClientProxyPtr inClientProxy )
@@ -116,14 +118,12 @@ void Server::SpawnCatForPlayer( int inPlayerId )
 	RoboCatPtr cat = std::static_pointer_cast< RoboCat >( GameObjectRegistry::sInstance->CreateGameObject( 'RCAT' ) );
 	cat->SetColor( ScoreBoardManager::sInstance->GetEntry( inPlayerId )->GetColor() );
 	cat->SetPlayerId( inPlayerId );
-	
+
 	//gotta pick a better spawn location than this...
+	//DropMoney(cat->GetLocation());
 
 	//TO-DO set spawn locations
-
 	cat->SetLocation( Vector3( 1.f - static_cast< float >( inPlayerId ), 0.f, 0.f ) );
-
-
 }
 
 void Server::HandleLostClient( ClientProxyPtr inClientProxy )

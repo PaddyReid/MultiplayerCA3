@@ -13,11 +13,22 @@ void MouseServer::HandleDying()
 
 bool MouseServer::HandleCollisionWithCat( RoboCat* inCat )
 {
-	//kill yourself!
-	SetDoesWantToDie( true );
+	ScoreBoardManager::Entry* currentEntry = ScoreBoardManager::sInstance->GetEntry(inCat->GetPlayerId());
 
-	ScoreBoardManager::sInstance->IncScore( inCat->GetPlayerId(), 500 );
+	if (currentEntry != nullptr)
+	{
+		if (!currentEntry->GetHasMoney())
+		{
+			//kill yourself!
+			SetDoesWantToDie(true);
 
+			//LOG("Player %d has Money %d", inCat->GetPlayerId(), currentEntry->GetHasMoney());
+			ScoreBoardManager::sInstance->ChangeHasMoney(inCat->GetPlayerId(), true);
+			//LOG("Player %d has Money %d", inCat->GetPlayerId(), currentEntry->GetHasMoney());
+
+			ScoreBoardManager::sInstance->IncScore(inCat->GetPlayerId(), 500);
+		}
+	}
 	return false;
 }
 

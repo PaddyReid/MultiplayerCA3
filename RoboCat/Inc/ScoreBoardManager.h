@@ -17,7 +17,9 @@ public:
 		const string&	GetPlayerName()	const	{ return mPlayerName; }
 		const string&	GetFormattedNameScore()	const	{ return mFormattedNameScore; }
 		int				GetScore()		const	{ return mScore; }
-
+		void			SetHasMoney( bool hasMoney) { mHasMoney = hasMoney; }
+		bool			GetHasMoney()	const	{ return mHasMoney; }
+			
 		void			SetScore( int inScore );
 
 		bool			Write( OutputMemoryBitStream& inOutputStream ) const;
@@ -30,9 +32,12 @@ public:
 		string			mPlayerName;
 		
 		int				mScore;
+		bool			mHasMoney;
 
 		string			mFormattedNameScore;
 	};
+
+	void	ChangeHasMoney(uint32_t playerId, bool hasMoney);
 
 	Entry*	GetEntry( uint32_t inPlayerId );
 	bool	RemoveEntry( uint32_t inPlayerId );

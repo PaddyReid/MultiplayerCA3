@@ -15,6 +15,8 @@ public:
 	void	SpawnCatForPlayer( int inPlayerId );
 	void	DrawTileMap();
 
+	void	DropMoney(Vector3 pos);
+
 
 private:
 	Server();

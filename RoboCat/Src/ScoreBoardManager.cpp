@@ -19,7 +19,8 @@ ScoreBoardManager::ScoreBoardManager()
 ScoreBoardManager::Entry::Entry( uint32_t inPlayerId, const string& inPlayerName, const Vector3& inColor ) :
 mPlayerId( inPlayerId ),
 mPlayerName( inPlayerName ),
-mColor( inColor )
+mColor( inColor ),
+mHasMoney( false )
 {
 	SetScore( 0 );
 }
@@ -79,6 +80,14 @@ void ScoreBoardManager::IncScore( uint32_t inPlayerId, int inAmount )
 	}
 }
 
+void ScoreBoardManager::ChangeHasMoney(uint32_t playerId, bool hasMoney)
+{
+	Entry* entry = GetEntry(playerId);
+	if (entry)
+	{
+		entry->SetHasMoney(hasMoney);
+	}
+}
 
 
 bool ScoreBoardManager::Write( OutputMemoryBitStream& inOutputStream ) const
@@ -121,6 +130,7 @@ bool ScoreBoardManager::Entry::Write( OutputMemoryBitStream& inOutputStream ) co
 	inOutputStream.Write( mPlayerId );
 	inOutputStream.Write( mPlayerName );
 	inOutputStream.Write( mScore );
+	inOutputStream.Write( mHasMoney );
 
 	return didSucceed;
 }
@@ -131,7 +141,6 @@ bool ScoreBoardManager::Entry::Read( InputMemoryBitStream& inInputStream )
 
 	inInputStream.Read( mColor );
 	inInputStream.Read( mPlayerId );
-
 	inInputStream.Read( mPlayerName );
 
 	int score;
@@ -140,7 +149,12 @@ bool ScoreBoardManager::Entry::Read( InputMemoryBitStream& inInputStream )
 	{
 		SetScore( score );
 	}
-
+	bool money;
+	inInputStream.Read(money);
+	if (didSucceed)
+	{
+		SetHasMoney(money);
+	}
 
 	return didSucceed;
 }

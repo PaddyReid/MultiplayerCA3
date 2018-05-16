@@ -9,8 +9,10 @@ mBandwidthOrigin( 50.f, 10.f, 0.0f ),
 mRoundTripTimeOrigin( 50.f, 10.f, 0.0f ),
 mScoreOffset( 0.f, 50.f, 0.0f ),
 mHealthOffset( 1000, 10.f, 0.0f ),
+mPositionOffset(600, 10.f, 0.0f),
 mHealth( 0 ),
-mInLobby(true)
+mInLobby(true),
+mHasMoney(false)
 {
 	TTF_Init();
 	mFont = TTF_OpenFont( "../Assets/GROBOLD.TTF", 36 );
@@ -30,6 +32,8 @@ void HUD::Render()
 {
 	RenderPosition();
 	//RenderRoundTripTime();
+	RenderHealth();
+	RenderMoney();
 
 	if (InLobby()) {
 		RenderLobby();
@@ -67,6 +71,20 @@ void HUD::RenderHealth()
 	}
 }
 
+void HUD::RenderMoney()
+{
+	ScoreBoardManager::Entry* currentEntry = ScoreBoardManager::sInstance->GetEntry(NetworkManagerClient::sInstance->GetPlayerId());
+
+	if (currentEntry != nullptr)
+	{
+		if (currentEntry->GetHasMoney())
+		{
+			string healthString = StringUtils::Sprintf("$$");
+			RenderText(healthString, Vector3(1200, 10.f, 0.0f), Colors::Green);
+		}
+	}
+}
+
 void HUD::RenderBandWidth()
 {
 	string bandwidth = StringUtils::Sprintf( "In %d  Bps, Out %d Bps",
@@ -77,11 +95,11 @@ void HUD::RenderBandWidth()
 
 void HUD::RenderPosition()
 {
-	string position = StringUtils::Sprintf("ViewTransPos: [%d,%d]",
+	string position = StringUtils::Sprintf("Pos: [%d,%d]",
 		static_cast< int >(RenderManager::sInstance->GetViewTransform().x),
 		static_cast< int >(RenderManager::sInstance->GetViewTransform().y));
 
-	RenderText(position, mHealthOffset, Colors::White);
+	RenderText( position, mPositionOffset, Colors::White);
 }
 
 void HUD::RenderRoundTripTime()
@@ -103,7 +121,6 @@ void HUD::RenderScoreBoard()
 		offset.mX += mScoreOffset.mX;
 		offset.mY += mScoreOffset.mY;
 	}
-
 }
 
 void HUD::RenderText( const string& inStr, const Vector3& origin, const Vector3& inColor )

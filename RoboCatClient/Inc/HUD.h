@@ -14,6 +14,7 @@ public:
 	void RenderLobby();
 
 	void			SetPlayerHealth(int inHealth) { mHealth = inHealth; }
+	bool			SetHasMoney(int val) { if (val == 1) { mHasMoney = true; } else { mHasMoney = false; } }
 	bool			InLobby() const { return mInLobby; }
 
 private:
@@ -25,6 +26,7 @@ private:
 	void	RenderRoundTripTime();
 	void	RenderScoreBoard();
 	void	RenderHealth();
+	void    RenderMoney();
 	void	RenderText( const string& inStr, const Vector3& origin, const Vector3& inColor );
 
 	Vector3										mBandwidthOrigin;
@@ -32,10 +34,12 @@ private:
 	Vector3										mScoreBoardOrigin;
 	Vector3										mScoreOffset;
 	Vector3										mHealthOffset;
+	Vector3										mPositionOffset;
 	SDL_Rect									mViewTransform;
 
 	TTF_Font*									mFont;
 	int											mHealth;
 	bool										mInLobby;
+	bool										mHasMoney;
 };
 

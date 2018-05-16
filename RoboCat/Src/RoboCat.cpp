@@ -249,12 +249,6 @@ uint32_t RoboCat::Write( OutputMemoryBitStream& inOutputStream, uint32_t inDirty
 		inOutputStream.Write( (bool)false );
 	}
 
-
-	
-
-
-	
-
 	return writtenState;
 	
 

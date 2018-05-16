@@ -22,6 +22,8 @@ bool Client::StaticInit( )
 	RenderManager::StaticInit();
 	InputManager::StaticInit();
 
+	
+	
 	HUD::StaticInit();
 
 	sInstance.reset( client );
@@ -36,7 +38,7 @@ Client::Client() :
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'MOUS', MouseClient::StaticCreate );
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'YARN', YarnClient::StaticCreate );
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'GRAS', MapClient::StaticCreate);
-	GameObjectRegistry::sInstance->RegisterCreationFunction('RCAT', RoboCatClient::StaticCreate);
+	GameObjectRegistry::sInstance->RegisterCreationFunction( 'RCAT', RoboCatClient::StaticCreate);
 
 	string destination = StringUtils::GetCommandLineArg( 1 );
 	string name = StringUtils::GetCommandLineArg( 2 );
@@ -51,7 +53,6 @@ Client::Client() :
 	//NetworkManagerClient::sInstance->SetSimulatedLatency( 0.1f );
 }
 
-int lev[30][30];
 
 void Client::DrawTileMap()
 {
@@ -62,9 +63,7 @@ void Client::DrawTileMap()
 	myfile.open("../Assets/mapmap.txt");
 	GameObjectPtr tile;
 	//TO_DO RUN UNTIL ITS THE SIZE OF FILE
-	//while (!myfile.eof())
-	//{
-	for (float y = -45; y < 50; y++)
+	for (float y = -40; y < 40; y++)
 	{
 		for (float x = -40; x < 40; x++)
 		{
@@ -92,11 +91,6 @@ void Client::DrawTileMap()
 			tilePiece->SetSource(Vector3(xPosition, yPosition, 0));
 		}
 	}
-		
-
-		//find a way to read neaxt line
-		
-	//}
 	myfile.close();
 }
 

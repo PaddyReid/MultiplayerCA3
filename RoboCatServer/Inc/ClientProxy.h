@@ -6,7 +6,7 @@ public:
 
 	const	SocketAddress&	GetSocketAddress()	const	{ return mSocketAddress; }
 			int				GetPlayerId()		const	{ return mPlayerId; }
-	const	string&		GetName()			const	{ return mName; }
+	const	string&		    GetName()			const	{ return mName; }
 
 			void			SetInputState( const InputState& inInputState )		{ mInputState = inInputState; }
 	const	InputState&		GetInputState()		const	{ return mInputState; }

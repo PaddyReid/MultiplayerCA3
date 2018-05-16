@@ -3,15 +3,15 @@
 Mouse::Mouse()
 {
 	SetScale( GetScale() * 0.5f );
-	SetCollisionRadius( 0.25f );
+	SetCollisionRadius( 0.10f );
 }
 
 
-//bool Mouse::HandleCollisionWithCat( RoboCat* inCat )
-//{
-//( void ) inCat;
-//	return false;
-//}
+bool Mouse::HandleCollisionWithCat( RoboCat* inCat )
+{
+( void ) inCat;
+	return false;
+}
 
 
 

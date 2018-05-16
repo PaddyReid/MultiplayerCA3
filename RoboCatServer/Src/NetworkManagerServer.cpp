@@ -225,7 +225,7 @@ int NetworkManagerServer::GetNewNetworkId()
 	int toRet = mNewNetworkId++; 
 	if( mNewNetworkId < toRet )
 	{
-		LOG( "Network ID Wrap Around!!! You've been playing way too long...", 0 );
+		LOG( "Network ID Wrap Around!!! You've been playing way too long..." , 0 );
 	}
 
 	return toRet;
