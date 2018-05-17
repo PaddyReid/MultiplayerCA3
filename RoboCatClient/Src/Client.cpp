@@ -81,14 +81,25 @@ void Client::DrawTileMap()
 			std::shared_ptr<MapClient> tilePiece = std::dynamic_pointer_cast<MapClient>(tile);
 
 			//Setup Texture
-			Vector3 tilelocation = Vector3(x * 0.639f, y * 0.639f, 0.f);
+			Vector3 tilelocation = Vector3(x *  0.639f, y * 0.639f, 0.f);
 			tilePiece->SetLocation(tilelocation);
 			tilePiece->SetSpriteTexture("world");
+
+			if (xPosition == 4 && yPosition == 6)
+			{
+				tilePiece->setCollidable(true);
+			}
+			else
+			{
+				tilePiece->setCollidable(false);
+			}
 
 			//Get texturemap co-ordinates
 			xPosition *= 64;
 			yPosition *= 64;
 			tilePiece->SetSource(Vector3(xPosition, yPosition, 0));
+
+			
 
 		}
 	}

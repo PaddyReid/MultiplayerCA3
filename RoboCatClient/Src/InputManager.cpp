@@ -75,6 +75,12 @@ void InputManager::HandleInput(EInputAction inInputAction, int inKeyCode)
 	else {
 		switch (inKeyCode)
 		{
+		case SDLK_w:
+			UpdateDesireFloatFromKey(inInputAction, mCurrentState.mDesiredForwardAmount);
+			break;
+		case SDLK_s:
+			UpdateDesireFloatFromKey(inInputAction, mCurrentState.mDesiredBackAmount);
+			break;
 		case SDLK_a:
 			UpdateDesireFloatFromKey(inInputAction, mCurrentState.mDesiredLeftAmount);
 			break;
@@ -112,6 +118,12 @@ void InputManager::HandleInputOnce(EInputAction inInputAction, int inKeyCode)
 	else {
 		switch (inKeyCode)
 		{
+		case SDLK_w:
+			UpdateDesireFloatFromKey(inInputAction, mCurrentState.mDesiredForwardAmount);
+			break;
+		case SDLK_s:
+			UpdateDesireFloatFromKey(inInputAction, mCurrentState.mDesiredBackAmount);
+			break;
 		case SDLK_a:
 			UpdateDesireFloatFromKey(inInputAction, mCurrentState.mDesiredLeftAmount);
 			break;

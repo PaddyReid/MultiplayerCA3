@@ -7,7 +7,8 @@ GameObject::GameObject() :
 	mRotation( 0.f ),
 	mNetworkId( 0 ),
 	mColor( Colors::White ),
-	mScale( 1.0f )
+	mScale( 1.0f ),
+	mHardCollision(false)
 {
 }
 
