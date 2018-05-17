@@ -1,0 +1,3 @@
+﻿  LobbyManager.cpp
+c:\users\iison\desktop\multiplayerca3\robocat\src\lobbymanager.cpp(115): warning C4389: '==': signed/unsigned mismatch
+  RoboCat.vcxproj -> C:\Users\iiSon\Desktop\MultiplayerCA3\RoboCat\Bin\Debug\RoboCat.lib
