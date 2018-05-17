@@ -24,24 +24,24 @@ public:
 
 	virtual void	HandleDying() {}
 
-			void	SetIndexInWorld( int inIndex )						{ mIndexInWorld = inIndex; }
-			int		GetIndexInWorld()				const				{ return mIndexInWorld; }
+			void	SetIndexInWorld( int inIndex )							{ mIndexInWorld = inIndex; }
+			int		GetIndexInWorld()				const					{ return mIndexInWorld; }
 
 			void	SetRotation( float inRotation );
-			float	GetRotation()					const				{ return mRotation; }
+			float	GetRotation()					const					{ return mRotation; }
 
-			void	SetScale( float inScale )							{ mScale = inScale; }
-			float	GetScale()						const				{ return mScale; }
+			void	SetScale( float inScale )								{ mScale = inScale; }
+			float	GetScale()						const					{ return mScale; }
 
 
-	const Vector3&		GetLocation()				const				{ return mLocation; }
-			void		SetLocation( const Vector3& inLocation )		{ mLocation = inLocation; }
+	const Vector3&		GetLocation()				const					{ return mLocation; }
+			void		SetLocation( const Vector3& inLocation )			{ mLocation = inLocation; }
 
-	const Vector3&		GetSource()					const				{ return mSource; }
-			void		SetSource(const Vector3& inGetSource)			{ mSource = inGetSource; }
+	const Vector3&		GetSource()					const					{ return mSource; }
+			void		SetSource(const Vector3& inGetSource)				{ mSource = inGetSource; }
 
-			float		GetCollisionRadius()		const				{ return mCollisionRadius; }
-			void		SetCollisionRadius( float inRadius )			{ mCollisionRadius = inRadius; }
+			float		GetCollisionRadius()		const					{ return mCollisionRadius; }
+			void		SetCollisionRadius( float inRadius )				{ mCollisionRadius = inRadius; }
 
 			Vector3		GetForwardVector()			const;
 

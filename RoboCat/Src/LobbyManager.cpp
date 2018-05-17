@@ -97,7 +97,7 @@ void LobbyManager::CheckPlayerCount()
 		{
 			//match running, don't mess with lobby setup
 			// handle game Timer
-			std::string message = "Time Remaining : " + std::to_string(GetMatchTimer());
+			std::string message = std::to_string(GetMatchTimer());
 			entry.SetLobbyMessage(message);
 		}
 	}

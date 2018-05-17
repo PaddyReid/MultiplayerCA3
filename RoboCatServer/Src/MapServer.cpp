@@ -13,11 +13,17 @@ void MapServer::HandleDying()
 
 bool MapServer::HandleCollisionWithCat(RoboCat* inCat)
 {
-	//kill yourself!
-	SetDoesWantToDie(false);
+	ScoreBoardManager::Entry* currentEntry = ScoreBoardManager::sInstance->GetEntry(inCat->GetPlayerId());
 
-	//ScoreBoardManager::sInstance->IncScore(inCat->GetPlayerId(), 1);
-
+	if (currentEntry != nullptr)
+	{
+		if (currentEntry->GetHasMoney())
+		{
+			//kill yourself!
+			ScoreBoardManager::sInstance->ChangeHasMoney(inCat->GetPlayerId(), false);
+			ScoreBoardManager::sInstance->IncScore(inCat->GetPlayerId(), 500);
+		}
+	}
 	return false;
 }
 

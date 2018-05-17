@@ -13,7 +13,7 @@ public:
 
 	RoboCatPtr	GetCatForPlayer( int inPlayerId );
 	void	SpawnCatForPlayer( int inPlayerId );
-	void	DrawTileMap();
+	void	DrawTileMap(Vector3 pos);
 	void	SetupSpawnLocation();
 	Vector3	GetSpawnLocation(int inPlayerId);
 	void	DropMoney(Vector3 pos);

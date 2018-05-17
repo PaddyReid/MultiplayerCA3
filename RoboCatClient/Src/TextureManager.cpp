@@ -20,14 +20,13 @@ TextureManager::TextureManager()
 	//Full tilesheet
 	CacheTexture("world", "../Assets/tilesheet.png");
 
-
 	//Props
 	CacheTexture("mouse", "../Assets/mouse.png");
-	CacheTexture("money", "../Assets/money.png");
+	CacheTexture("money", "../Assets/MoneyBag.png");
 
 	//Characters
-	CacheTexture(	"cat", "../Assets/hitman_Moving.png");	
-	CacheTexture(	"yarn", "../Assets/Bullet.png" );
+	CacheTexture("cat", "../Assets/hitman_Moving.png");	
+	CacheTexture("yarn", "../Assets/Bullet.png" );
 }
 
 

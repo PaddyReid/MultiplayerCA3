@@ -60,12 +60,12 @@ void Client::DrawTileMap()
 	int xPosition, yPosition;
 	std::string numb; 
 	std::ifstream myfile;
-	myfile.open("../Assets/mapmap.txt");
+	myfile.open("../Assets/Map.txt");
 	GameObjectPtr tile;
 	//TO_DO RUN UNTIL ITS THE SIZE OF FILE
-	for (float y = -40; y < 40; y++)
+	for (float y = -30; y < 30; y++)
 	{
-		for (float x = -40; x < 40; x++)
+		for (float x = -47; x < 47; x++)
 		{
 			//Get X and Y Position from File;
 			myfile.get(mNumberFromFile);
@@ -89,6 +89,7 @@ void Client::DrawTileMap()
 			xPosition *= 64;
 			yPosition *= 64;
 			tilePiece->SetSource(Vector3(xPosition, yPosition, 0));
+
 		}
 	}
 	myfile.close();

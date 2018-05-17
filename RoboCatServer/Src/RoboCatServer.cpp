@@ -87,6 +87,19 @@ void RoboCatServer::TakeDamage( int inDamagingPlayerId )
 		SetDoesWantToDie( true );
 
 		//Player drop money
+		ScoreBoardManager::Entry* currentEntry = ScoreBoardManager::sInstance->GetEntry(GetPlayerId());
+
+		if (currentEntry != nullptr)
+		{
+			if (currentEntry->GetHasMoney())
+			{
+				//kill yourself!
+				SetDoesWantToDie(true);
+				ScoreBoardManager::sInstance->ChangeHasMoney(GetPlayerId(), false);
+				ScoreBoardManager::sInstance->IncScore(GetPlayerId(), 500);
+			}
+		}
+
 
 		//tell the client proxy to make you a new cat
 		ClientProxyPtr clientProxy = NetworkManagerServer::sInstance->GetClientProxy( GetPlayerId() );

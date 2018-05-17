@@ -21,12 +21,8 @@ bool MouseServer::HandleCollisionWithCat( RoboCat* inCat )
 		{
 			//kill yourself!
 			SetDoesWantToDie(true);
-
-			//LOG("Player %d has Money %d", inCat->GetPlayerId(), currentEntry->GetHasMoney());
 			ScoreBoardManager::sInstance->ChangeHasMoney(inCat->GetPlayerId(), true);
-			//LOG("Player %d has Money %d", inCat->GetPlayerId(), currentEntry->GetHasMoney());
-
-			ScoreBoardManager::sInstance->IncScore(inCat->GetPlayerId(), 500);
+			//ScoreBoardManager::sInstance->IncScore(inCat->GetPlayerId(), 500);
 		}
 	}
 	return false;

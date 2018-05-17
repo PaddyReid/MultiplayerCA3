@@ -61,10 +61,11 @@ public:
 	void	ResetGame();
 
 	const vector< LobbyPlayer >&	GetEntries()	const { return mEntries; }
+	int const MATCH_TIMER = 10;
+	int const TIME_TO_GAME_START = 5;
 
 private:
-	int MATCH_TIMER = 10;
-	int TIME_TO_GAME_START = 5;
+	
 
 	LobbyManager();
 

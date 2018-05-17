@@ -1,4 +1,5 @@
 #include <RoboCatClientPCH.h>
+#include <SDL_image.h>
 
 std::unique_ptr< HUD >	HUD::sInstance;
 
@@ -30,29 +31,69 @@ void HUD::StaticInit()
 
 void HUD::Render()
 {
-	RenderPosition();
+	//RenderPosition();
 	//RenderRoundTripTime();
-	
-	if (LobbyManager::sInstance->IsGamePlaying()) {
+	if (LobbyManager::sInstance->IsGamePlaying()) 
+	{
 		RenderGameTimer();
-	RenderHealth();
-	RenderMoney();
-		RenderScoreBoard();
 		RenderHealth();
+		RenderMoney();
+		RenderScoreBoard();
 	}
-	else {
+	else 
+	{
 		RenderLobby();
 	}
+
+
 }
 
 void HUD::RenderGameTimer() {
 	const vector< LobbyManager::LobbyPlayer >& entries = LobbyManager::sInstance->GetEntries();
 
-	Vector3 offset = Vector3(800.f, 10.f, 0.0f);
+	Vector3 offset = Vector3(1300, 195, 0.0f);
 	for (const auto& entry : entries)
 	{
 		if (entry.GetPlayerId() == NetworkManagerClient::sInstance->GetPlayerId())
-		RenderText(entry.GetLobbyMessage(), offset, Colors::White);
+		{
+			float x = 1234;
+			float y = 200;
+			float h = 20;
+			float w = 10;
+			SDL_Color BGColor = { 255, 255, 255 };
+			SDL_Color FGColor = { 0, 0, 0 };
+
+			float Percent = LobbyManager::sInstance->GetMatchTimer();
+			Percent = Percent > LobbyManager::sInstance->MATCH_TIMER ? LobbyManager::sInstance->MATCH_TIMER : Percent < 0.f ? 0.f : Percent;
+			SDL_Color old;
+			SDL_GetRenderDrawColor(GraphicsDriver::sInstance->GetRenderer(), &old.r, &old.g, &old.g, &old.a);
+			SDL_Rect bgrect = { x, y, w, h };
+			SDL_SetRenderDrawColor(GraphicsDriver::sInstance->GetRenderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a);
+			SDL_RenderFillRect(GraphicsDriver::sInstance->GetRenderer(), &bgrect);
+			SDL_SetRenderDrawColor(GraphicsDriver::sInstance->GetRenderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a);
+			int ph = (int)((float)h * Percent);
+			int py = y + (h - ph);
+			SDL_Rect fgrect = { x, py, w, ph };
+			SDL_RenderFillRect(GraphicsDriver::sInstance->GetRenderer(), &fgrect);
+			SDL_SetRenderDrawColor(GraphicsDriver::sInstance->GetRenderer(), old.r, old.g, old.b, old.a);
+
+			//Render image
+			SDL_Surface* mBombImage = IMG_Load("../Assets/timer.png");
+			SDL_Texture* bombImage = SDL_CreateTextureFromSurface(GraphicsDriver::sInstance->GetRenderer(), mBombImage);
+
+			SDL_Rect src;
+			SDL_Rect dest;
+			src.x = src.y = 0;
+			src.h = dest.h = 75;
+			src.w = dest.w = 75;
+
+			dest.x = 1200;
+			dest.y = 200;
+			SDL_RenderCopy(GraphicsDriver::sInstance->GetRenderer(), bombImage, &src, &dest);
+
+			RenderText(entry.GetLobbyMessage(), offset, Colors::White);
+
+		}	
 	}
 }
 
@@ -78,8 +119,26 @@ void HUD::RenderHealth()
 {
 	if (mHealth > 0)
 	{
-		string healthString = StringUtils::Sprintf("Health %d", mHealth);
-		RenderText(healthString, mHealthOffset, Colors::Red);
+		//string healthString = StringUtils::Sprintf("Health %d", mHealth);
+		//RenderText(healthString, mHealthOffset, Colors::Red);
+
+		//health bar    
+		SDL_Color BGColor = { 0,0,0 };
+		SDL_Color FGColor = { 255,0,0 };
+		int w = 40;
+		mHealth = mHealth > 10.f ? 10.f : mHealth < 0.f ? 0.f : mHealth;
+		SDL_Color old;
+		SDL_GetRenderDrawColor(GraphicsDriver::sInstance->GetRenderer(), &old.r, &old.g, &old.g, &old.a);
+		SDL_Rect bgrect = { 1000, 10.f, 0.0f };
+		SDL_SetRenderDrawColor(GraphicsDriver::sInstance->GetRenderer(), BGColor.r, BGColor.g, BGColor.b, BGColor.a);
+		SDL_RenderFillRect(GraphicsDriver::sInstance->GetRenderer(), &bgrect);
+		SDL_SetRenderDrawColor(GraphicsDriver::sInstance->GetRenderer(), FGColor.r, FGColor.g, FGColor.b, FGColor.a);
+		int pw = (int)((float)w * mHealth);
+		int px = 1000 + (w - pw);
+		SDL_Rect fgrect = { px, 10, pw, 10 };
+		SDL_RenderFillRect(GraphicsDriver::sInstance->GetRenderer(), &fgrect);
+		SDL_SetRenderDrawColor(GraphicsDriver::sInstance->GetRenderer(), old.r, old.g, old.b, old.a);
+
 	}
 }
 
