@@ -21,8 +21,12 @@ public:
 	void	DrawTileMap();
 	void	SetupSpawnLocation();
 	void	LoadHighScores();
+	void	UpdateHighScores();
+	bool	UpdateHighScore(int playerId, string playerName, int score);
 	void	SaveHighScores();
 	int		GetHighScore(int playerId);
+	int		GetHighScore(int playerId, string playerName);
+	int		GetHighScore(string playerName);
 	Vector3	GetSpawnLocation(int inPlayerId);
 	void	DropMoney(Vector3 pos);
 
@@ -33,5 +37,5 @@ private:
 	void	SetupWorld();
 	float	mTimeElapsed;
 	vector<Vector3>	mSpawnLocations;
-	vector<HighScore> highScores;
+	vector<HighScore> mHighScores;
 };
