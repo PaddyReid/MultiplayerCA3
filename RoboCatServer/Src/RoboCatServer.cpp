@@ -75,7 +75,33 @@ void RoboCatServer::HandleShooting()
 	}
 }
 
-void RoboCatServer::TakeDamage( int inDamagingPlayerId )
+void RoboCatServer::Kill() {
+	SetVelocity(Vector3(0, 0, 0));
+	mIsShooting = false;
+	mHealth = 0;
+	SetDoesWantToDie(true);
+
+	//Player drop money
+	ScoreBoardManager::Entry* currentEntry = ScoreBoardManager::sInstance->GetEntry(GetPlayerId());
+
+	if (currentEntry != nullptr)
+	{
+		if (currentEntry->GetHasMoney())
+		{
+			ScoreBoardManager::sInstance->ChangeHasMoney(GetPlayerId(), false);
+			ScoreBoardManager::sInstance->IncScore(GetPlayerId(), 500);
+		}
+	}
+
+	//tell the client proxy to make you a new cat
+	ClientProxyPtr clientProxy = NetworkManagerServer::sInstance->GetClientProxy(GetPlayerId());
+	if (clientProxy)
+	{
+		clientProxy->HandleCatDied();
+	}
+}
+
+void RoboCatServer::TakeDamage(int inDamagingPlayerId)
 {
 	mHealth--;
 	if( mHealth <= 0.f )

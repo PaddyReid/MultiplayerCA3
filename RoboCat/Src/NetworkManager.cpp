@@ -1,4 +1,5 @@
 #include <RoboCatPCH.h>
+#include <stdio.h> 
 
 NetworkManager::NetworkManager() :
 	mBytesSentThisFrame( 0 ),
@@ -48,7 +49,6 @@ void NetworkManager::ProcessIncomingPackets()
 
 void NetworkManager::ReadIncomingPacketsIntoQueue()
 {
-	//should we just keep a static one?
 	//should we just keep a static one?
 	char packetMem[ 1500 ];
 	int packetSize = sizeof( packetMem );
@@ -103,6 +103,12 @@ void NetworkManager::ReadIncomingPacketsIntoQueue()
 
 	if( totalReadByteCount > 0 )
 	{
+	/*	string message = "Packet Size : " + std::to_string(totalReadByteCount);
+		int n = message.length();
+		char *message_array = new char[n + 1];
+		strcpy(message_array, message.c_str());
+		LOG(message_array, 0);*/
+
 		mBytesReceivedPerSecond.UpdatePerSecond( static_cast< float >( totalReadByteCount ) );
 	}
 }

@@ -1,4 +1,4 @@
-1,Cormac,2000
-5,John,3500
-2,Patrick,2000
-5,MaxJustice,10000
+Cormac,2000
+John,3500
+Patrick,2000
+MaxJustice,10000
