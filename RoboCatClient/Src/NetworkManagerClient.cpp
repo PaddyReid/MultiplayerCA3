@@ -28,7 +28,7 @@ void NetworkManagerClient::Init( const SocketAddress& inServerAddress, const str
 	mServerAddress = inServerAddress;
 	mState = NCS_SayingHello;
 	mTimeOfLastHello = 0.f;
-	mName = inName;
+	mName = inName.substr(0, 10);
 
 	mAvgRoundTripTime = WeightedTimedMovingAverage( 1.f );
 }

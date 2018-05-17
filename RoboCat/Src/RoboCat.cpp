@@ -81,6 +81,7 @@ void RoboCat::ProcessCollisions()
 			//simple collision test for spheres- are the radii summed less than the distance?
 			Vector3 targetLocation = target->GetLocation();
 			float targetRadius = target->GetCollisionRadius();
+			SDL_Rect MapRadius = target->GetMapRadius();
 
 			Vector3 delta = targetLocation - sourceLocation;
 			float distSq = delta.LengthSq2D();
@@ -88,6 +89,10 @@ void RoboCat::ProcessCollisions()
 			if( distSq < ( collisionDist * collisionDist ) )
 			{
 				//first, tell the other guy there was a collision with a cat, so it can do something...
+				if (MapRadius.x > 0)
+				{
+					//MAP
+				}
 
 				if( target->HandleCollisionWithCat( this ) )
 				{

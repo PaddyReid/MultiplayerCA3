@@ -31,7 +31,8 @@ void LobbyManager::LobbyPlayer::SetReadyState(bool inReadyState)
 	mReadyState = inReadyState;
 
 	char	buffer[256];
-	snprintf(buffer, 256, "%s %s", mPlayerName.c_str(), mReadyState ? "ready" : "not ready");
+	//snprintf(buffer, 256, "%s %s", mPlayerName.c_str(), mReadyState ? "ready" : "not ready");
+	snprintf(buffer, 256, "%s", mPlayerName.c_str());
 	mFormattedNameReadyState = string(buffer);
 	LobbyManager::sInstance->CheckPlayerCount();
 }

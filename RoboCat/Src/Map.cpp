@@ -2,7 +2,15 @@
 
 Map::Map()
 {
-	SetCollisionRadius(0);
+	//SetScale(GetScale());
+	//SetCollisionRadius(GetScale() / 2);
+	SetHardCollision(true);
+	SDL_Rect mapBounds;
+	mapBounds.h = .64f; 
+	mapBounds.w = .64f;
+	mapBounds.x = .64f;
+	mapBounds.y = .64f;
+	SetMapRadius(mapBounds);
 }
 
 

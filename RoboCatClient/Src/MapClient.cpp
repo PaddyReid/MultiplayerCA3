@@ -20,3 +20,19 @@ int MapClient::GetTextureWidth() {
 int MapClient::GetTextureHeight() {
 	return TextureManager::sInstance->GetTexture(textureName)->GetHeight();
 }
+
+bool MapClient::HandleCollisionWithCat(RoboCat* inCat)
+{
+
+	//FindSpecific tile to collide with;
+	if (GetCollidable())
+	{
+		return true;
+	}
+	else
+	{
+		//nothing
+		return false;
+	}
+	
+}
