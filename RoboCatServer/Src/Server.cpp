@@ -1,4 +1,7 @@
 #include <RoboCatServerPCH.h>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 bool Server::StaticInit()
 {
@@ -9,7 +12,8 @@ bool Server::StaticInit()
 
 Server::Server() :
 	mTimeElapsed(0),
-	mSpawnLocations()
+	mSpawnLocations(),
+	mHighScores()
 {
 	SetupSpawnLocation();
 	
@@ -19,7 +23,6 @@ Server::Server() :
 	GameObjectRegistry::sInstance->RegisterCreationFunction( 'RCAT', RoboCatServer::StaticCreate );
 
 	InitNetworkManager();
-	
 	//NetworkManagerServer::sInstance->SetDropPacketChance( 0.8f );
 	//NetworkManagerServer::sInstance->SetSimulatedLatency( 0.25f );
 	//NetworkManagerServer::sInstance->SetSimulatedLatency( 0.5f );
@@ -31,6 +34,7 @@ Server::Server() :
 int Server::Run()
 {
 	SetupWorld();
+	LoadHighScores();
 
 	return Engine::Run();
 }
@@ -112,6 +116,89 @@ void Server::DropMoney(Vector3 pos)
 	go->SetLocation(pos);
 }
 
+void Server::LoadHighScores()
+{
+	std::string line;
+	std::ifstream scorefile;
+	scorefile.open("../Assets/scores.txt");
+	while (getline(scorefile, line, (char)'\n')) {
+		HighScore score;
+		std::stringstream ss(line);
+		std::string val;
+
+		getline(ss, val, (char)',');
+		score.playerId = stoi(val);
+		getline(ss, val, (char)',');
+		score.playerName = val;
+		getline(ss, val, (char)','); 
+		score.score = stoi(val);
+		mHighScores.push_back(score);
+	}
+
+	scorefile.close();
+}
+
+void Server::UpdateHighScores()
+{
+	for (ScoreBoardManager::Entry entry : ScoreBoardManager::sInstance->GetEntries()) {
+		if (!UpdateHighScore(entry.GetPlayerId(), entry.GetPlayerName(), entry.GetScore())) {
+			HighScore hs;
+			hs.playerId = entry.GetPlayerId();
+			hs.playerName = entry.GetPlayerName();
+			hs.score = entry.GetScore();
+		}
+	}
+}
+
+bool Server::UpdateHighScore(int playerId, string playerName, int score)
+{
+	for (HighScore sc : mHighScores) {
+		if (playerId == sc.playerId && playerName == sc.playerName) {
+			sc.score = score;
+			return true;
+		}
+	}
+	return false;
+}
+
+void Server::SaveHighScores()
+{
+	UpdateHighScores();
+	std::ofstream out("../Assets/score.txt");
+
+	for (HighScore sc : mHighScores) {
+		out << sc.playerId << ',' << sc.playerName << ',' << sc.score;
+		out << '\n';
+	}
+}
+
+int Server::GetHighScore(int playerId)
+{
+	for (HighScore sc : mHighScores) {
+		if (playerId == sc.playerId)
+			return sc.score;
+	}
+	return -1;
+}
+
+int Server::GetHighScore(int playerId, string playerName)
+{
+	for (HighScore sc : mHighScores) {
+		if (playerId == sc.playerId && playerName == sc.playerName)
+			return sc.score;
+	}
+	return -1;
+}
+
+int Server::GetHighScore(string playerName)
+{
+	for (HighScore sc : mHighScores) {
+		if (playerName == sc.playerName)
+			return sc.score;
+	}
+	return -1;
+}
+
 Vector3 Server::GetSpawnLocation(int inPlayerId)
 {
 	if(inPlayerId<17)
@@ -173,10 +260,12 @@ void Server::DoFrame()
 
 void Server::HandleNewClient( ClientProxyPtr inClientProxy )
 {
-	
 	int playerId = inClientProxy->GetPlayerId();
 
 	ScoreBoardManager::sInstance->AddEntry(playerId, inClientProxy->GetName());
+	int oldScore = GetHighScore(playerId, inClientProxy->GetName());
+	if(oldScore != -1) //restore old score
+		ScoreBoardManager::sInstance->IncScore(playerId, oldScore);
 	LobbyManager::sInstance->AddEntry(playerId, inClientProxy->GetName());
 	SpawnCatForPlayer( playerId );
 }
@@ -193,8 +282,6 @@ void Server::SpawnCatForPlayer( int inPlayerId )
 	//TO-DO set spawn locations
 
 	cat->SetLocation(GetSpawnLocation(inPlayerId));
-
-
 }
 
 void Server::HandleLostClient( ClientProxyPtr inClientProxy )
@@ -202,7 +289,7 @@ void Server::HandleLostClient( ClientProxyPtr inClientProxy )
 	//kill client's cat
 	//remove client from scoreboard
 	int playerId = inClientProxy->GetPlayerId();
-
+	UpdateHighScores();
 	ScoreBoardManager::sInstance->RemoveEntry(playerId);
 	LobbyManager::sInstance->RemoveEntry(playerId);
 	RoboCatPtr cat = GetCatForPlayer( playerId );

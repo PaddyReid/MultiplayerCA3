@@ -71,6 +71,7 @@ void ScoreBoardManager::AddEntry( uint32_t inPlayerId, const string& inPlayerNam
 	mEntries.emplace_back( inPlayerId, inPlayerName, mDefaultColors[ inPlayerId % mDefaultColors.size() ] );
 }
 
+
 void ScoreBoardManager::IncScore( uint32_t inPlayerId, int inAmount )
 {
 	Entry* entry = GetEntry( inPlayerId );

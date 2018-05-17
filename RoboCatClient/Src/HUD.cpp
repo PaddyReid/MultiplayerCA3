@@ -1,6 +1,7 @@
 #include <RoboCatClientPCH.h>
 #include <SDL_image.h>
 
+bool SortByScore(ScoreBoardManager::Entry x, ScoreBoardManager::Entry y);
 std::unique_ptr< HUD >	HUD::sInstance;
 
 
@@ -181,18 +182,28 @@ void HUD::RenderRoundTripTime()
 	RenderText( roundTripTime, mRoundTripTimeOrigin, Colors::White );
 }
 
+bool SortByScore(ScoreBoardManager::Entry x, ScoreBoardManager::Entry y) {
+	return (x.GetScore() > y.GetScore());
+}
+
 void HUD::RenderScoreBoard()
 {
-	const vector< ScoreBoardManager::Entry >& entries = ScoreBoardManager::sInstance->GetEntries();
+	vector< ScoreBoardManager::Entry >& entries = ScoreBoardManager::sInstance->GetEntries();
+	std::sort(entries.begin(), entries.end(), SortByScore);
 	Vector3 offset = mScoreBoardOrigin;
-	
+	int count = 0; //only want the top 3
 	for( const auto& entry: entries )
 	{
 		RenderText( entry.GetFormattedNameScore(), offset, entry.GetColor() );
 		offset.mX += mScoreOffset.mX;
 		offset.mY += mScoreOffset.mY;
+		if (count == 2)
+			return;
+		count++;
 	}
 }
+
+
 
 void HUD::RenderText( const string& inStr, const Vector3& origin, const Vector3& inColor )
 {

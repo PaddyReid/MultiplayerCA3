@@ -35,6 +35,7 @@ public:
 		bool			mHasMoney;
 
 		string			mFormattedNameScore;
+		
 	};
 
 	void	ChangeHasMoney(uint32_t playerId, bool hasMoney);
@@ -42,13 +43,16 @@ public:
 	Entry*	GetEntry( uint32_t inPlayerId );
 	bool	RemoveEntry( uint32_t inPlayerId );
 	void	AddEntry( uint32_t inPlayerId, const string& inPlayerName );
+	void	SaveScore(uint32_t inPlayerId);
+	void	LoadScore(uint32_t inPlayerId);
 	void	IncScore( uint32_t inPlayerId, int inAmount );
 
 	bool	Write( OutputMemoryBitStream& inOutputStream ) const;
 	bool	Read( InputMemoryBitStream& inInputStream );
 
-	const vector< Entry >&	GetEntries()	const	{ return mEntries; }
-
+	vector< Entry >&	GetEntries()		{ return mEntries; }
+	
+	
 private:
 
 	ScoreBoardManager();
