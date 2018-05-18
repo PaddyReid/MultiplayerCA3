@@ -1,7 +1,7 @@
 #include <RoboCatClientPCH.h> 
 
 MapClient::MapClient() :
-	textureName("grass")
+	textureName("vanOne")
 {
 	mSpriteComponent.reset(new SpriteComponent(this));
 	SetSpriteTexture(textureName);
@@ -30,20 +30,9 @@ int MapClient::GetTextureHeight() {
 
 bool MapClient::HandleCollisionWithCat(RoboCat* inCat)
 {
-
-	//FindSpecific tile to collide with;
 	if (GetCollidable())
 	{
-		ScoreBoardManager::Entry* currentEntry = ScoreBoardManager::sInstance->GetEntry(inCat->GetPlayerId());
-
-		if (currentEntry != nullptr)
-		{
-			if (currentEntry->GetHasMoney())
-			{
-				ScoreBoardManager::sInstance->ChangeHasMoney(inCat->GetPlayerId(), false);
-				ScoreBoardManager::sInstance->IncScore(inCat->GetPlayerId(), 500);
-			}
-		}
+		//To-Do add wall collision
 	}
 	return false;
 }

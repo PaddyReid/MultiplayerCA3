@@ -53,8 +53,8 @@ namespace
 	
 	void CreateRandomMice( int inMouseCount )
 	{
-		Vector3 mouseMin( -28.f, -18.f, 0.f );
-		Vector3 mouseMax( 17.f, 16.f, 0.f );
+		Vector3 mouseMin( -23.f, -18.f, 0.f );
+		Vector3 mouseMax( 17.f, 12.f, 0.f );
 		GameObjectPtr go;
 
 		//make a mouse somewhere- where will these come from?
@@ -70,32 +70,41 @@ namespace
 
 void Server::DrawTileMap(Vector3 pos)
 {
-	/*GameObjectPtr go;
-	go = GameObjectRegistry::sInstance->CreateGameObject('MOUS');
-	go->SetLocation(pos);*/
+	GameObjectPtr go;
+	go = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	go->SetLocation(Vector3(-25, 15, 0));
 
-	//Draw Drop off zones
+	go = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	go->SetLocation(Vector3(20, 16, 0));
 
+	go = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	go->SetLocation(Vector3(0, 16, 0));
+
+	go = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	go->SetLocation(Vector3(-25, 15, 0));
+
+	go = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	go->SetLocation(Vector3(-25, -16, 0));
 }
 
 void Server::SetupSpawnLocation()
 {
-	mSpawnLocations.push_back(Vector3(0, -0.65, 0)); //1
-	mSpawnLocations.push_back(Vector3(0, -16, 0)); //2
-	mSpawnLocations.push_back(Vector3(0, 16, 0)); //3
-	mSpawnLocations.push_back(Vector3(27, -16, 0)); //4
-	mSpawnLocations.push_back(Vector3(-28, -16, 0)); //5
-	mSpawnLocations.push_back(Vector3(27, 16, 0)); //6
-	mSpawnLocations.push_back(Vector3(-28, 16, 0)); //7
-	mSpawnLocations.push_back(Vector3(27, -0.5, 0)); //8
-	mSpawnLocations.push_back(Vector3(-28, 0, 0)); //9
-	mSpawnLocations.push_back(Vector3(15, 12, 0)); //10
-	mSpawnLocations.push_back(Vector3(-15, 12, 0)); //11
-	mSpawnLocations.push_back(Vector3(27, 12, 0)); //12
-	mSpawnLocations.push_back(Vector3(-28, 12, 0)); //13
-	mSpawnLocations.push_back(Vector3(-27, -12, 0)); //14
-	mSpawnLocations.push_back(Vector3(27, -12, 0)); //15
-	mSpawnLocations.push_back(Vector3(-0, -8, 0)); //16
+	mSpawnLocations.push_back(Vector3(0, -0.65, 0));	//1
+	mSpawnLocations.push_back(Vector3(0, -16, 0));	    //2
+	mSpawnLocations.push_back(Vector3(0, 16, 0));		//3
+	mSpawnLocations.push_back(Vector3(27, -16, 0));		//4
+	mSpawnLocations.push_back(Vector3(-28, -16, 0));	//5
+	mSpawnLocations.push_back(Vector3(27, 16, 0));		//6
+	mSpawnLocations.push_back(Vector3(-28, 16, 0));		//7
+	mSpawnLocations.push_back(Vector3(27, -0.5, 0));	//8
+	mSpawnLocations.push_back(Vector3(-28, 0, 0));		//9
+	mSpawnLocations.push_back(Vector3(15, 12, 0));		//10
+	mSpawnLocations.push_back(Vector3(-15, 12, 0));		//11
+	mSpawnLocations.push_back(Vector3(27, 12, 0));		//12
+	mSpawnLocations.push_back(Vector3(-28, 12, 0));		//13
+	mSpawnLocations.push_back(Vector3(-27, -12, 0));	//14
+	mSpawnLocations.push_back(Vector3(27, -12, 0));		//15
+	mSpawnLocations.push_back(Vector3(-0, -8, 0));		//16
 }
 void Server::DropMoney(Vector3 pos)
 {
@@ -201,14 +210,9 @@ void Server::SetupWorld()
 	CreateRandomMice( 10 );
 
 	//spawn more random mice!
-	//ReturnZone
 	CreateRandomMice( 5 );
 
-	//DrawTileMap(Vector3(0, 0, 0));
-
-	//Draw tile map
-	//Change to power ups??
-	//DrawTileMap();
+	DrawTileMap(Vector3(0, 0, 0));
 }
 
 void Server::DoFrame()
