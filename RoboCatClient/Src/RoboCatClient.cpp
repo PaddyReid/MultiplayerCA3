@@ -131,6 +131,8 @@ void RoboCatClient::Read( InputMemoryBitStream& inInputStream )
 		Vector3 color;
 		inInputStream.Read( color );
 		SetColor( color );
+		LobbyManager::sInstance->GetEntry(GetPlayerId())->SetNewColor(color);
+		ScoreBoardManager::sInstance->GetEntry(GetPlayerId())->SetNewColor(color);
 		readState |= ECRS_Color;
 	}
 

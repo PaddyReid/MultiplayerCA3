@@ -160,5 +160,6 @@ bool ScoreBoardManager::Entry::Read( InputMemoryBitStream& inInputStream )
 	return didSucceed;
 }
 
-
-
+void ScoreBoardManager::Entry::SetNewColor(Vector3 color) {
+	mColor = color;
+}

@@ -32,8 +32,8 @@ void LobbyManager::LobbyPlayer::SetReadyState(bool inReadyState)
 	mReadyState = inReadyState;
 
 	char	buffer[256];
-	//snprintf(buffer, 256, "%s %s", mPlayerName.c_str(), mReadyState ? "ready" : "not ready");
-	snprintf(buffer, 256, "%s", mPlayerName.c_str());
+	snprintf(buffer, 256, "%s %s", mPlayerName.c_str(), mReadyState ? "ready" : "not ready");
+	//snprintf(buffer, 256, "%s", mPlayerName.c_str());
 	mFormattedNameReadyState = string(buffer);
 	LobbyManager::sInstance->CheckPlayerCount();
 }
@@ -311,8 +311,12 @@ bool LobbyManager::LobbyPlayer::Read(InputMemoryBitStream& inInputStream)
 
 	inInputStream.Read(mLobbyMessage);
 	inInputStream.Read(mFormattedNameReadyState);
+
 	return didSucceed;
 }
 
+void LobbyManager::LobbyPlayer::SetNewColor(Vector3 color) {
+	mColor = color;
+}
 
 

@@ -24,6 +24,7 @@ public:
 
 		bool			Write( OutputMemoryBitStream& inOutputStream ) const;
 		bool			Read( InputMemoryBitStream& inInputStream );
+		void			SetNewColor(Vector3 color);
 		static uint32_t	GetSerializedSize();
 	private:
 		Vector3			mColor;
