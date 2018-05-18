@@ -40,18 +40,52 @@ void HUD::Render()
 		RenderMoney();
 		RenderScoreBoard();
 	}
+	else if (LobbyManager::sInstance->IsGameFinished())
+	{
+		RenderWinScreen();
+	}
 	else
 	{
 		RenderLobby();
 	}
+}
 
+void HUD::RenderWinScreen()
+{
+	//Game is over
+	SDL_Surface* WinScreen = IMG_Load("../Assets/WinScreen.png");
+	SDL_Texture* win = SDL_CreateTextureFromSurface(GraphicsDriver::sInstance->GetRenderer(), WinScreen);
 
+	SDL_Rect src;
+	SDL_Rect dest;
+	src.x = src.y = 0;
+	src.h = dest.h = 720;
+	src.w = dest.w = 1280;
+
+	dest.x = 0;
+	dest.y = 0;
+
+	SDL_RenderCopy(GraphicsDriver::sInstance->GetRenderer(), win, &src, &dest);
+
+	//Print Winners Name
+	vector< ScoreBoardManager::Entry >& entries = ScoreBoardManager::sInstance->GetEntries();
+	std::sort(entries.begin(), entries.end(), SortByScore);
+	float count = 0;
+
+	Vector3 playerPosition = Vector3(475.f, 550.f, 0);
+
+	for (const auto& entry : entries)
+	{
+		string ranking = "1st - ";
+		RenderText(ranking + entry.GetFormattedNameScore(), playerPosition, Colors::White);
+		break;
+	}
 }
 
 void HUD::RenderGameTimer() {
 	const vector< LobbyManager::LobbyPlayer >& entries = LobbyManager::sInstance->GetEntries();
 
-	Vector3 offset = Vector3(1300, 195, 0.0f);
+	Vector3 offset = Vector3(1215, 225, 0.0f);
 	for (const auto& entry : entries)
 	{
 		if (entry.GetPlayerId() == NetworkManagerClient::sInstance->GetPlayerId())
@@ -112,6 +146,20 @@ void HUD::RenderLobby()
 			RenderText(entry.GetLobbyMessage(), mBandwidthOrigin, Colors::White);
 
 	}
+
+	SDL_Surface* Instructions = IMG_Load("../Assets/Instructions.png");
+	SDL_Texture* ins = SDL_CreateTextureFromSurface(GraphicsDriver::sInstance->GetRenderer(), Instructions);
+
+	SDL_Rect src;
+	SDL_Rect dest;
+	src.x = src.y = 0;
+	src.h = dest.h = 681;
+	src.w = dest.w = 455;
+
+	dest.x = 800;
+	dest.y = 20;
+
+	SDL_RenderCopy(GraphicsDriver::sInstance->GetRenderer(), ins, &src, &dest);
 
 }
 

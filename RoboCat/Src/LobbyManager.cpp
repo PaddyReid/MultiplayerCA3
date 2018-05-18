@@ -10,7 +10,8 @@ void LobbyManager::StaticInit()
 
 LobbyManager::LobbyManager() :
 	mEveryoneReady(false),
-	mGamePlaying(false)
+	mGamePlaying(false),
+	mGameFinished(false)
 {
 	mDefaultColors.push_back(Colors::LightYellow);
 	mDefaultColors.push_back(Colors::LightBlue);
@@ -186,6 +187,8 @@ bool LobbyManager::Write(OutputMemoryBitStream& inOutputStream) const
 	inOutputStream.Write(mTimeToGameStart);
 	inOutputStream.Write(mMatchTimer);
 	inOutputStream.Write(mGamePlaying);
+	inOutputStream.Write(mGameFinished);
+
 	return true;
 }
 
@@ -212,6 +215,10 @@ bool LobbyManager::Read(InputMemoryBitStream& inInputStream)
 	inInputStream.Read(gamePlaying);
 	SetGamePlaying(gamePlaying);
 
+	bool gameFinished;
+	inInputStream.Read(gameFinished);
+	SetGameFinished(gameFinished);
+
 	return true;
 }
 
@@ -224,6 +231,12 @@ void LobbyManager::SetGamePlaying(bool gamePlaying)
 {
 	mGamePlaying = gamePlaying;
 }
+
+void LobbyManager::SetGameFinished(bool gameFinished)
+{
+	mGameFinished = gameFinished;
+}
+
 
 int LobbyManager::GetTimeToGameStart() const
 {
@@ -259,6 +272,9 @@ void LobbyManager::ResetGame()
 {
 	mGamePlaying = false;
 	ResetTimeToGameStart();
+	//SetWinScreen
+	SetGameFinished(true);
+	mGameFinished = true;
 	SetEveryoneReady(false);
 	for (LobbyPlayer entry : GetEntries()) {
 		entry.SetReadyState(false);

@@ -22,6 +22,7 @@ private:
 	HUD();
 
 	void	RenderGameTimer();
+	void	RenderWinScreen();
 	void	RenderBandWidth();
 	void	RenderPosition();
 	void	RenderRoundTripTime();

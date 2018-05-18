@@ -51,8 +51,10 @@ public:
 	bool	Read(InputMemoryBitStream& inInputStream);
 	bool	IsEveryoneReady() const { return mEveryoneReady; }
 	bool	IsGamePlaying() const { return mGamePlaying; }
+	bool	IsGameFinished() const { return mGameFinished; }
 	void	SetEveryoneReady(bool inEveryoneReady);
 	void	SetGamePlaying(bool gamePlaying);
+	void	SetGameFinished(bool gameFinished);
 	int		GetTimeToGameStart() const;
 	void    SetTimeToGameStart(int newTime);
 	int		GetMatchTimer() const;
@@ -61,7 +63,7 @@ public:
 	void	ResetGame();
 
 	const vector< LobbyPlayer >&	GetEntries()	const { return mEntries; }
-	int const MATCH_TIMER = 10;
+	int const MATCH_TIMER = 120;
 	int const TIME_TO_GAME_START = 5;
 
 private:
@@ -77,4 +79,5 @@ private:
 	int mMatchTimer;
 	bool mEveryoneReady;
 	bool mGamePlaying;
+	bool mGameFinished;
 };
