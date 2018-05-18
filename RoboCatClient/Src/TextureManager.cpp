@@ -23,8 +23,9 @@ TextureManager::TextureManager()
 	//Props
 	CacheTexture("vanOne", "../Assets/MoneyTruckOne.png");
 	CacheTexture("vanTwo", "../Assets/MoneyTruckTwo.png");
-	CacheTexture("mouse", "../Assets/mouse.png");
-	CacheTexture("money", "../Assets/MoneyBag.png");
+	CacheTexture("mouse",  "../Assets/mouse.png");
+	CacheTexture("money",  "../Assets/MoneyBag.png");
+	CacheTexture("health", "../Assets/health.png");
 
 	//Character
 	CacheTexture("cat", "../Assets/hitman_Moving.png");	

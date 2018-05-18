@@ -21,6 +21,7 @@ Server::Server() :
 	GameObjectRegistry::sInstance->RegisterCreationFunction('YARN', YarnServer::StaticCreate);
 	GameObjectRegistry::sInstance->RegisterCreationFunction('GRAS', MapServer::StaticCreate);
 	GameObjectRegistry::sInstance->RegisterCreationFunction('RCAT', RoboCatServer::StaticCreate);
+	GameObjectRegistry::sInstance->RegisterCreationFunction('HEAL', HealthServer::StaticCreate);
 
 	InitNetworkManager();
 	//NetworkManagerServer::sInstance->SetDropPacketChance( 0.8f );
@@ -65,6 +66,13 @@ namespace
 			go->SetLocation(mouseLocation);
 		}
 	}
+}
+
+void Server::SpawnHealthPacks()
+{
+	GameObjectPtr go;
+	go = GameObjectRegistry::sInstance->CreateGameObject('HEAL');
+	go->SetLocation(Vector3(0, -2, 0));
 }
 
 
@@ -211,6 +219,10 @@ void Server::SetupWorld()
 	//spawn more random mice!
 	//ReturnZone
 	CreateRandomMice( 5 );
+
+	SpawnHealthPacks();
+
+	//spawnHelth()
 
 	DrawTileMap(Vector3(0, 0, 0));
 }

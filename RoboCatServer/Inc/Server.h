@@ -18,6 +18,7 @@ public:
 	RoboCatPtr	GetCatForPlayer( int inPlayerId );
 	RoboCat *	GetCatRefForPlayer(int inPlayerId);
 	void	SpawnCatForPlayer( int inPlayerId );
+	void    SpawnHealthPacks();
 	void	DrawTileMap(Vector3 pos);
 	void	SetupSpawnLocation();
 	void	LoadHighScores();

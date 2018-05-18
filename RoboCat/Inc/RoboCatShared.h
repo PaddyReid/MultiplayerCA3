@@ -79,6 +79,7 @@ class GameObject;
 #include "Mouse.h"
 #include "Map.h"
 #include "Yarn.h"
+#include "Health.h"
 #include "StringUtils.h"
 #include "ScoreBoardManager.h"
 #include "LobbyManager.h"

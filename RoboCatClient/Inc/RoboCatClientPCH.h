@@ -15,6 +15,7 @@
 #include <MouseClient.h>
 #include <MapClient.h>
 #include <YarnClient.h>
+#include <HealthClient.h>
 
 #include <HUD.h>
 
