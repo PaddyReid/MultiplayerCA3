@@ -38,7 +38,6 @@ public:
 	uint32_t				GetSize()			const	{ return sizeof( sockaddr ); }
 
 	string					ToString()			const;
-
 private:
 	friend class UDPSocket;
 	friend class TCPSocket;
