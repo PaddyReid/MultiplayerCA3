@@ -85,25 +85,48 @@ void Client::DrawTileMap()
 			tilePiece->SetLocation(tilelocation);
 			tilePiece->SetSpriteTexture("world");
 
-			if (xPosition == 4 && yPosition == 6)
-			{
-				tilePiece->setCollidable(true);
-			}
-			else
-			{
-				tilePiece->setCollidable(false);
-			}
-
 			//Get texturemap co-ordinates
 			xPosition *= 64;
 			yPosition *= 64;
 			tilePiece->SetSource(Vector3(xPosition, yPosition, 0));
-
-			
-
 		}
 	}
 	myfile.close();
+
+
+	//Adding Vans to the game
+	tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	std::shared_ptr<MapClient> van = std::dynamic_pointer_cast<MapClient>(tile);
+
+	van->SetSpriteTexture("vanOne");
+	van->SetLocation(Vector3(-25, 15, 0));
+	van->SetSource(Vector3(0, 0, 0));
+	van->setCollidable(true);
+
+	tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	std::shared_ptr<MapClient> van1 = std::dynamic_pointer_cast<MapClient>(tile);
+
+	van1->SetSpriteTexture("vanTwo");
+	van1->SetLocation(Vector3(20, 16, 0));
+	van1->SetSource(Vector3(0, 0, 0));
+	van1->setCollidable(true);
+
+	tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	std::shared_ptr<MapClient> van2 = std::dynamic_pointer_cast<MapClient>(tile);
+
+	van2->SetSpriteTexture("vanOne");
+	van2->SetLocation(Vector3(0, 16, 0));
+	van2->SetSource(Vector3(0, 0, 0));
+	van2->setCollidable(true);
+
+	tile = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
+	std::shared_ptr<MapClient> van3 = std::dynamic_pointer_cast<MapClient>(tile);
+
+	van3->SetSpriteTexture("vanTwo");
+	van3->SetLocation(Vector3(-25, -16, 0));
+	van3->SetSource(Vector3(0, 0, 0));
+	van3->setCollidable(true);
+
 }
 
 void Client::DoFrame()

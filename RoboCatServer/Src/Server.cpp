@@ -75,19 +75,7 @@ void Server::DrawTileMap(Vector3 pos)
 	go->SetLocation(pos);*/
 
 	//Draw Drop off zones
-	GameObjectPtr col;
 
-	col = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
-	col->SetLocation(Vector3(-28, -16, 0));
-
-	col = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
-	col->SetLocation(Vector3(27, 16, 0));
-
-	col = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
-	col->SetLocation(Vector3(-28, 16, 0));
-
-	col = GameObjectRegistry::sInstance->CreateGameObject('GRAS');
-	col->SetLocation(Vector3(27, -16, 0));
 }
 
 void Server::SetupSpawnLocation()
@@ -215,7 +203,7 @@ void Server::SetupWorld()
 	//ReturnZone
 	CreateRandomMice(5);
 
-	DrawTileMap(Vector3(0, 0, 0));
+	//DrawTileMap(Vector3(0, 0, 0));
 
 	//Draw tile map
 	//Change to power ups??
