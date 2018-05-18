@@ -127,7 +127,7 @@ bool ScoreBoardManager::Entry::Write( OutputMemoryBitStream& inOutputStream ) co
 {
 	bool didSucceed = true;
 
-	inOutputStream.Write( mColor );
+	//inOutputStream.Write( mColor );
 	inOutputStream.Write( mPlayerId );
 	inOutputStream.Write( mPlayerName );
 	inOutputStream.Write( mScore );
@@ -140,7 +140,7 @@ bool ScoreBoardManager::Entry::Read( InputMemoryBitStream& inInputStream )
 {
 	bool didSucceed = true;
 
-	inInputStream.Read( mColor );
+	//inInputStream.Read( mColor );
 	inInputStream.Read( mPlayerId );
 	inInputStream.Read( mPlayerName );
 

@@ -14,6 +14,7 @@ public:
 
 	void SetCatControlType( ECatControlType inCatControlType ) { mCatControlType = inCatControlType; }
 
+	void Kill();
 	void TakeDamage( int inDamagingPlayerId );
 	void SetReadyState(int inPlayerId, bool readyState);
 
@@ -23,6 +24,7 @@ protected:
 private:
 
 	void HandleShooting();
+
 
 	ECatControlType	mCatControlType;
 

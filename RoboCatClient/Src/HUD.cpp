@@ -2,7 +2,7 @@
 #include <SDL_image.h>
 
 std::unique_ptr< HUD >	HUD::sInstance;
-
+bool SortByScore(ScoreBoardManager::Entry x, ScoreBoardManager::Entry y);
 
 HUD::HUD() :
 	mScoreBoardOrigin(50.f, 60.f, 0.0f),
@@ -181,16 +181,43 @@ void HUD::RenderRoundTripTime()
 	RenderText(roundTripTime, mRoundTripTimeOrigin, Colors::White);
 }
 
+bool SortByScore(ScoreBoardManager::Entry x, ScoreBoardManager::Entry y) {
+	return (x.GetScore() > y.GetScore());
+}
+
 void HUD::RenderScoreBoard()
 {
-	const vector< ScoreBoardManager::Entry >& entries = ScoreBoardManager::sInstance->GetEntries();
+	vector< ScoreBoardManager::Entry >& entries = ScoreBoardManager::sInstance->GetEntries();
+	std::sort(entries.begin(), entries.end(), SortByScore);
 	Vector3 offset = mScoreBoardOrigin;
+	int count = 0; //only want the top 3
 
-	for (const auto& entry : entries)
-	{
-		RenderText(entry.GetFormattedNameScore(), offset, entry.GetColor());
+
+	ScoreBoardManager::Entry* thisPlayer = ScoreBoardManager::sInstance->GetEntry(NetworkManagerClient::sInstance->GetPlayerId());
+	if (thisPlayer != nullptr) {
+		RenderText(thisPlayer->GetPlayerName() + " - $" + std::to_string(thisPlayer->GetScore()), offset, Vector3(0, 0, 0));
 		offset.mX += mScoreOffset.mX;
 		offset.mY += mScoreOffset.mY;
+	}
+	
+	RenderText("Leader Board", offset, Vector3(0,0,0));
+	offset.mX += mScoreOffset.mX;
+	offset.mY += mScoreOffset.mY;
+
+	for( const auto& entry : entries )
+	{
+		string ranking = "1st - ";
+		if (count == 1)
+			ranking = "2nd - ";
+		else if (count == 2)
+			ranking = "3rd - ";
+
+		RenderText(ranking + entry.GetFormattedNameScore(), offset, entry.GetColor() );
+		offset.mX += mScoreOffset.mX;
+		offset.mY += mScoreOffset.mY;
+		if (count == 2)
+			return;
+		count++;
 	}
 }
 
