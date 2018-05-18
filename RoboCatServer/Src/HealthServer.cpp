@@ -13,9 +13,11 @@ void HealthServer::HandleDying()
 
 bool HealthServer::HandleCollisionWithCat(RoboCat* inCat)
 {
-	SetDoesWantToDie(true);
-	//incremanet health
 
+	//destroy health item
+	SetDoesWantToDie(true);
+	//tell clients to ad health
+	static_cast< RoboCatServer* >(inCat)->AddHealth();
 
 	return false;
 }

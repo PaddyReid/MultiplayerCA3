@@ -141,6 +141,16 @@ void RoboCatServer::TakeDamage(int inDamagingPlayerId)
 	NetworkManagerServer::sInstance->SetStateDirty( GetNetworkId(), ECRS_Health );
 }
 
+void RoboCatServer::AddHealth()
+{
+	mHealth+=2;
+	if (mHealth > 10) {
+		mHealth = 10;
+	}
+	//tell the world our health increased
+	NetworkManagerServer::sInstance->SetStateDirty(GetNetworkId(), ECRS_Health);
+}
+
 void RoboCatServer::SetReadyState(int inPlayerId, bool readyState)
 {
 	LobbyManager::sInstance->ChangeReadyState(inPlayerId, readyState);

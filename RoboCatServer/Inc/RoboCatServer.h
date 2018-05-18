@@ -16,6 +16,7 @@ public:
 
 	void Kill();
 	void TakeDamage( int inDamagingPlayerId );
+	void AddHealth();
 	void SetReadyState(int inPlayerId, bool readyState);
 
 protected:
